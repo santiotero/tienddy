@@ -89,8 +89,8 @@
       <script type="text/javascript">       
 
         window.onload = function() {
-          
-          fetch("https://google.com")
+          let myUrl = 'https://ucustom.walmart.com.ar/suggest/full.json?bucket=walmart_search_stage&f=product&q=manteca&attributes[sales_channel][]=15';
+          fetch(myUrl)
           .then(result => {
             console.log("volvio",result);
           });
