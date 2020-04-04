@@ -18,17 +18,17 @@
             <a href="#!" class="brand-logo">Tienddy</a>
             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">...</i></a>
             <ul class="right hide-on-med-and-down">
-              <li><a href="#">Inicio</a></li>
-              <li><a href="#">Carrito</a></li>
-              <li><a href="#">Perfil</a></li>
+              <li><a href="#"><i class="material-icons">home</i></a></li>
+              <li><a href="#"><i class="material-icons">shopping_cart</i></a></li>
+              <li><a href="#"><i class="material-icons">person</i></a></li>
             </ul>
           </div>
         </nav>
 
         <ul class="sidenav" id="mobile-demo">
-          <li><a href="#">Inicio</a></li>
-          <li><a href="#">Carrito</a></li>
-          <li><a href="#">Perfil</a></li>
+            <li><a href="#"><i class="material-icons">home</i></a></li>
+            <li><a href="#"><i class="material-icons">shopping_cart</i></a></li>
+            <li><a href="#"><i class="material-icons">person</i></a></li>
         </ul>
 
         <div id="buscador">
@@ -49,9 +49,9 @@
               <div class="indeterminate"></div>
           </div>
         </div>
-        <div id="resultados">
-          <div id="lista" class="collection">            
-          </div>
+        <div id="resultados">          
+           <ul  id="lista" class="collection">            
+          </ul>
         </div>        
 
         <footer class="page-footer">
@@ -127,10 +127,18 @@
 
                   (res.data.views).forEach(element => {
 
-                    var conts = '<a href="#" onclick="hola()" class="collection-item">&nbsp;'+element.title+'&nbsp;&nbsp;<img src="'+element.image+'" height="33" width="33">&nbsp;&nbsp;</a>';
-                    document.getElementById('lista').innerHTML += conts;
+                  var conts = 
+                              '<li class="collection-item avatar">' + 
+                                '<img src="'+element.image+'" class="circle">'+
+                                '<span class="title">'+element.title+'</span>'+
+                                  '<a href="#" class="secondary-content"><i class="material-icons" onclick="hola()">add_shopping_cart</i></a>'
+                              '</li>';
+                    document.getElementById('lista').innerHTML = conts;
+                    
                   });
 
+                }else{
+                  document.getElementById('lista').innerHTML = 'No hay resultados...';
                 }
                 
               });
