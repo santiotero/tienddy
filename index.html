@@ -116,7 +116,6 @@
               url = "https://ucustom.walmart.com.ar/suggest/full.json?bucket=walmart_search_stage&f=product&q=" + producto + "&attributes[sales_channel][]=15";
               fetch(url)
               .then(result => {
-                console.log("volvio");
                 result = result.json();
                 return result;
               }).
@@ -129,8 +128,7 @@
                   (res.data.views).forEach(element => {
 
                     var conts = '<a href="#" onclick="hola()" class="collection-item">&nbsp;'+element.title+'&nbsp;&nbsp;<img src="'+element.image+'" height="33" width="33">&nbsp;&nbsp;</a>';
-                    document.getElementById('lista').innerHTML += conts;                    
-                                      
+                    document.getElementById('lista').innerHTML += conts;
                   });
 
                 }
