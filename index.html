@@ -45,7 +45,11 @@
               </div>
             </div>
         </div>
-
+        <div id="cargando">
+          <div class="progress">
+              <div class="indeterminate"></div>
+          </div>
+        </div>
         <div id="resultados">
           <div class="collection">
             <a href="#!" id="dato1" class="collection-item"></a>
@@ -89,6 +93,9 @@
       <script type="text/javascript">       
 
         window.onload = function() {
+
+          document.getElementById("cargando").style.opacity = "0";
+
           obj = window.document.getElementById("autocomplete-input");
           obj.addEventListener("keydown", function(event){
             buscar(event);
@@ -99,8 +106,17 @@
         function buscar(evento){
 
           if(event.which == 13){
+
+              document.getElementById("cargando").style.opacity = "1";
+
               let url = "";
               let producto = window.document.getElementById("autocomplete-input").value;
+              
+              window.document.getElementById("dato1").innerHTML = "";
+              window.document.getElementById("dato2").innerHTML = "";
+              window.document.getElementById("dato3").innerHTML = "";
+              window.document.getElementById("dato4").innerHTML = "";
+
               url = "https://ucustom.walmart.com.ar/suggest/full.json?bucket=walmart_search_stage&f=product&q=" + producto + "&attributes[sales_channel][]=15";
               fetch(url)
               .then(result => {
@@ -110,22 +126,24 @@
               }).
               then(res => {
 
+                document.getElementById("cargando").style.opacity = "0";
+
                 if( Object.keys(res.data.views).length > 0 ){
                   //console.log(res.data.views);
                   let cont = 1;
                   (res.data.views).forEach(element => {
                     switch(cont){
                       case 1:
-                      window.document.getElementById("dato1").innerHTML = element.title ;
+                      window.document.getElementById("dato1").innerHTML = element.title + ' <img src="'+  element.image +'" height="33" width="33">'
                       break;
                       case 2:
-                      window.document.getElementById("dato2").innerHTML = element.title ;
+                      window.document.getElementById("dato2").innerHTML = element.title + ' <img src="'+  element.image +'" height="33" width="33">';
                       break;
                       case 3:
-                      window.document.getElementById("dato3").innerHTML = element.title ;
+                      window.document.getElementById("dato3").innerHTML = element.title + ' <img src="'+  element.image +'" height="33" width="33">';
                       break;
                       case 4:
-                      window.document.getElementById("dato4").innerHTML = element.title ;
+                      window.document.getElementById("dato4").innerHTML = element.title + ' <img src="'+  element.image +'" height="33" width="33">';
                       break;
                       default:
                     }
