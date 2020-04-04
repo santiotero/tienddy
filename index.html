@@ -48,10 +48,10 @@
 
         <div id="resultados">
           <div class="collection">
-            <a href="#!" class="collection-item">resultado 1</a>
-            <a href="#!" class="collection-item">resultado 2</a>
-            <a href="#!" class="collection-item">resultado 3</a>
-            <a href="#!" class="collection-item">resultado 4</a>
+            <a href="#!" id="dato1" class="collection-item">resultado 1</a>
+            <a href="#!" id="dato2" class="collection-item">resultado 2</a>
+            <a href="#!" id="dato3" class="collection-item">resultado 3</a>
+            <a href="#!" id="dato4" class="collection-item">resultado 4</a>
           </div>
         </div>        
 
@@ -89,18 +89,64 @@
       <script type="text/javascript">       
 
         window.onload = function() {
-          let myUrl = 'https://ucustom.walmart.com.ar/suggest/full.json?bucket=walmart_search_stage&f=product&q=manteca&attributes[sales_channel][]=15';
-          fetch(myUrl)
-          .then(result => {
-            console.log("volvio");
-            result = result.json();
-            return result;
-          }).
-          then(res => {
-            console.log(res.data.views);
+          obj = window.document.getElementById("autocomplete-input");
+          obj.addEventListener("keydown", function(event){
+            buscar(event);
           });
 
         };
+
+        function buscar(evento){
+
+          if(event.which == 13){
+              let url = "";
+              let producto = window.document.getElementById("autocomplete-input").value;
+              url = "https://ucustom.walmart.com.ar/suggest/full.json?bucket=walmart_search_stage&f=product&q=" + producto + "&attributes[sales_channel][]=15";
+              fetch(url)
+              .then(result => {
+                console.log("volvio");
+                result = result.json();
+                return result;
+              }).
+              then(res => {
+
+                if( Object.keys(res.data.views).length > 0 ){
+                  //console.log(res.data.views);
+                  let cont = 1;
+                  (res.data.views).forEach(element => {
+                    switch(cont){
+                      case 1:
+                      window.document.getElementById("dato1").innerHTML = element.title ;
+                      break;
+                      case 2:
+                      window.document.getElementById("dato2").innerHTML = element.title ;
+                      break;
+                      case 3:
+                      window.document.getElementById("dato3").innerHTML = element.title ;
+                      break;
+                      case 4:
+                      window.document.getElementById("dato4").innerHTML = element.title ;
+                      break;
+                      default:
+                    }
+                    //console.log(element.title);
+                    //console.log(element.image);
+                    //console.log("--------------------------");
+                    cont++;
+                  });
+
+                }else{
+                  window.document.getElementById("dato1").innerHTML = "No hay resultados para '" + producto + "'" ;
+                  window.document.getElementById("dato2").innerHTML = "" ;
+                  window.document.getElementById("dato3").innerHTML = "";
+                  window.document.getElementById("dato4").innerHTML = "" ;
+                  console.log("error");
+                }
+                
+              });
+          }
+
+        }
       </script>
 
 
