@@ -84,14 +84,8 @@
 
         function agregar(id,descripcion,url){
           console.log(id);
-          //let productos = {};
-          //productos.id = id;
-          //productos.descripcion = descripcion;
-          //carrito.push({id:descripcion});
-           carrito[''+id+''] = descripcion;
-           carrito[''+id+'-img'] = url;
-
-          //Object.assign(carrito, {id:id,descripcion: descripcion});
+          carrito[''+id+''] = descripcion;
+          carrito[''+id+'-img'] = url;
         }
 
         function buscar(evento){
