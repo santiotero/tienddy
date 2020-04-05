@@ -18,17 +18,17 @@
             <a href="#!" class="brand-logo">Tienddy</a>
             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">...</i></a>
             <ul class="right hide-on-med-and-down">
-              <li><a href="#"><i class="material-icons">home</i></a></li>
-              <li><a href="#"><i class="material-icons">shopping_cart</i></a></li>
-              <li><a href="#"><i class="material-icons">person</i></a></li>
+              <li><a href="#!"><i class="material-icons">home</i></a></li>
+              <li><a href="#!" onclick="mostrarCarrito()"><i class="material-icons">shopping_cart</i></a></li>
+              <li><a href="#!"><i class="material-icons">person</i></a></li>
             </ul>
           </div>
         </nav>
 
         <ul class="sidenav" id="mobile-demo">
-            <li><a href="#"><i class="material-icons">home</i></a></li>
-            <li><a href="#"><i class="material-icons">shopping_cart</i></a></li>
-            <li><a href="#"><i class="material-icons">person</i></a></li>
+            <li><a href="#!"><i class="material-icons">home</i>Inicio</a></li>
+            <li><a href="#!" onclick="mostrarCarrito()"><i class="material-icons">shopping_cart</i>Carrito</a></li>
+            <li><a href="#!"><i class="material-icons">person</i>Perfil</a></li>
         </ul>
 
           <!-- Modal Trigger -->
@@ -59,6 +59,7 @@
               </div>
             </div>
         </div>
+
         <div id="cargando">
           <div class="progress">
               <div class="indeterminate"></div>
@@ -67,6 +68,24 @@
         <div id="resultados">          
            <ul  id="lista" class="collection">            
           </ul>
+        </div>
+
+        <!-- Modal Trigger -->
+        <a class="waves-effect waves-light btn modal-trigger" id="modpopFoot" href="#mpop2">.</a>
+
+        <!-- Modal Structure -->
+        <div id="mpop2" class="modal bottom-sheet">
+          <div class="modal-content">
+            <h4>Tu lista:</h4>
+            <p>
+              <ul  id="agregandoCarrito" class="collection">            
+              </ul>            
+            </p>
+    
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+          </div>
         </div>        
 
         <footer class="page-footer">          
@@ -88,6 +107,7 @@
 
           document.getElementById("cargando").style.opacity = "0";
           document.getElementById("modpop").style.display = "none";
+          document.getElementById("modpopFoot").style.display = "none";
 
           obj = window.document.getElementById("autocomplete-input");
           obj.addEventListener("keydown", function(event){
@@ -97,16 +117,42 @@
         };
 
         document.addEventListener('DOMContentLoaded', function() {
-          var elems = document.querySelectorAll('.modal');
-          modalpop = M.Modal.init(elems);
+          
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+          var elemsMod = document.querySelectorAll('.modal');
+          modalpop = M.Modal.init(elemsMod);
+
+          var elemsSid = document.querySelectorAll('.sidenav');
+          var instances = M.Sidenav.init(elemsSid);
         });
 
         function agregar(id,descripcion,url,dataPop){
-          console.log(id);
-          carrito[''+id+''] = descripcion;
-          carrito[''+id+'-img'] = url;
-          document.getElementById('agregando').innerHTML = '<ul  id="lista" class="collection">'+dataPop+'</ul>';
+
+          document.getElementById('agregando').innerHTML = '';
+          carrito[''+id+''] = {descripcion: descripcion, url: url, cantidad: 1};          
+          document.getElementById('agregando').innerHTML = '<ul class="collection">'+dataPop+'</ul>';
           document.getElementById('modpop').click();
+        }
+
+        function mostrarCarrito(){
+          document.getElementById('agregandoCarrito').innerHTML = 'No hay productos en tu lista.';
+          if(Object.keys(carrito).length > 0 ){
+
+              document.getElementById('agregandoCarrito').innerHTML = '';
+              Object.keys(carrito).forEach(function(key) {
+                let dataCarrito = 
+                      '<li class="collection-item avatar">' + 
+                      '<img src="'+carrito[key].url+'" class="circle">'+
+                      '<span class="title">'+carrito[key].descripcion+'</span>'+
+                      '</li>';
+                document.getElementById('agregandoCarrito').innerHTML += dataCarrito;
+              });
+                    
+          }
+          document.getElementById('modpopFoot').click();
+
         }
 
         function buscar(evento){
@@ -118,8 +164,6 @@
               let url = "";
               let producto = window.document.getElementById("autocomplete-input").value;
               document.getElementById('lista').innerHTML = '';
-              document.getElementById('agregando').innerHTML = '';
-
 
               url = "https://ucustom.walmart.com.ar/suggest/full.json?bucket=walmart_search_stage&f=product&q=" + producto + "&attributes[sales_channel][]=15";
               fetch(url)
@@ -134,7 +178,6 @@
                 if( Object.keys(res.data.views).length > 0 ){                      
                       
                       (res.data.views).forEach(element => {
-
                       let conts = 
                                   '<li class="collection-item avatar">' + 
                                     '<img src="'+element.image+'" class="circle">'+
