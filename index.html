@@ -42,7 +42,7 @@
               <p id="agregando"></p>
             </div>
             <div class="modal-footer">
-              <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+              <a href="#!" id="agregandoCerrar" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
             </div>
           </div>
 
@@ -84,7 +84,7 @@
     
           </div>
           <div class="modal-footer">
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Volver</a>
           </div>
         </div>        
 
@@ -130,6 +130,7 @@
           carrito[''+id+''] = {descripcion: descripcion, url: url, cantidad: 1};          
           document.getElementById('agregando').innerHTML = '<ul class="collection">'+dataPop+'</ul>';
           document.getElementById('modpop').click();
+          setTimeout(function(){ document.getElementById('agregandoCerrar').click() }, 2000);          
         }
 
         function mostrarCarrito(){
