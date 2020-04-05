@@ -31,6 +31,21 @@
             <li><a href="#"><i class="material-icons">person</i></a></li>
         </ul>
 
+          <!-- Modal Trigger -->
+          <a class="waves-effect waves-light btn modal-trigger" id="modpop" href="#mpop">.</a>
+
+        
+          <!-- Modal Structure -->
+          <div id="mpop" class="modal">
+            <div class="modal-content">
+              <h3>Se agrego al pedido</h3>
+              <p id="agregando"></p>
+            </div>
+            <div class="modal-footer">
+              <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+            </div>
+          </div>
+
         <div id="buscador">
             <div class="row">
               <div class="col s12">
@@ -71,9 +86,10 @@
       <script type="text/javascript" src="js/materialize.min.js"></script>
       <script type="text/javascript">
         var carrito = {};
-        window.onload = function() {
-          
+        window.onload = function() {          
+
           document.getElementById("cargando").style.opacity = "0";
+          document.getElementById("modpop").style.display = "none";
 
           obj = window.document.getElementById("autocomplete-input");
           obj.addEventListener("keydown", function(event){
@@ -82,10 +98,17 @@
 
         };
 
-        function agregar(id,descripcion,url){
+        document.addEventListener('DOMContentLoaded', function() {
+          var elems = document.querySelectorAll('.modal');
+          modalpop = M.Modal.init(elems);
+        });
+
+        function agregar(id,descripcion,url,dataPop){
           console.log(id);
           carrito[''+id+''] = descripcion;
           carrito[''+id+'-img'] = url;
+          document.getElementById('agregando').innerHTML = '<ul  id="lista" class="collection">'+dataPop+'</ul>';
+          document.getElementById('modpop').click();
         }
 
         function buscar(evento){
@@ -97,6 +120,7 @@
               let url = "";
               let producto = window.document.getElementById("autocomplete-input").value;
               document.getElementById('lista').innerHTML = '';
+              document.getElementById('agregando').innerHTML = '';
 
 
               url = "https://ucustom.walmart.com.ar/suggest/full.json?bucket=walmart_search_stage&f=product&q=" + producto + "&attributes[sales_channel][]=15";
@@ -108,29 +132,28 @@
               then(res => {
 
                 document.getElementById("cargando").style.opacity = "0";
+                
+                if( Object.keys(res.data.views).length > 0 ){                      
+                      
+                      (res.data.views).forEach(element => {
 
-                if( Object.keys(res.data.views).length > 0 ){
+                      let conts = 
+                                  '<li class="collection-item avatar">' + 
+                                    '<img src="'+element.image+'" class="circle">'+
+                                    '<span class="title">'+element.title+'</span>'+
+                                      '<a href="#!" id="'+element.product_id+'" class="secondary-content"></a>'
+                                  '</li>';
+                        document.getElementById('lista').innerHTML += conts;
+                        let tagI = document.createElement("i");                    
+                        tagI.innerHTML = "add_shopping_cart";
+                        tagI.setAttribute("class", "material-icons");                   
+                        tagI.setAttribute("onclick", "agregar('"+element.product_id+"','"+element.title+"','"+element.image+"','"+conts+"')");
+                        document.getElementById(''+element.product_id+'').appendChild(tagI);
 
-                  (res.data.views).forEach(element => {
-
-                  let conts = 
-                              '<li class="collection-item avatar">' + 
-                                '<img src="'+element.image+'" class="circle">'+
-                                '<span class="title">'+element.title+'</span>'+
-                                  '<a href="#!" id="'+element.product_id+'" class="secondary-content"></a>'
-                              '</li>';
-                    document.getElementById('lista').innerHTML += conts;
-                    let tagI = document.createElement("i");                    
-                    tagI.innerHTML = "add_shopping_cart";
-                    tagI.setAttribute("class", "material-icons");
-                    tagI.setAttribute("onclick", "agregar('"+element.product_id+"','"+element.title+"','"+element.image+"')");                      
-                    document.getElementById(''+element.product_id+'').appendChild(tagI);
-                    
-                                     
-                  });
-
-                }else{
-                  document.getElementById('lista').innerHTML = 'No hay resultados...';
+                      });                      
+                }else{                      
+                      document.getElementById('lista').innerHTML = 'No hay resultados...';
+                      return false;
                 }
                 
               });
