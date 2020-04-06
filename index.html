@@ -19,7 +19,7 @@
             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">...</i></a>
             <ul class="right hide-on-med-and-down">
               <li><a href="#!"><i class="material-icons">home</i></a></li>
-              <li><a href="#!" onclick="mostrarCarrito()"><i class="material-icons">shopping_cart</i></a></li>
+              <li><a href="#!" onclick="mostrarCarrito()" class="btn-floating red pulse"><i class="material-icons">shopping_cart</i></a></li>
               <li><a href="#!"><i class="material-icons">person</i></a></li>
             </ul>
           </div>
@@ -176,11 +176,22 @@
 
         function agregar(id,descripcion,url,dataPop){
 
-          document.getElementById('agregando').innerHTML = '';
-          carrito[''+id+''] = {descripcion: descripcion, url: url, cantidad: 1};          
-          document.getElementById('agregando').innerHTML = '<ul class="collection">'+dataPop+'</ul>';
-          document.getElementById('modpop').click();
-          setTimeout(function(){ document.getElementById('agregandoCerrar').click() }, 1500);          
+          if( carrito[''+id+''] == window.undefined){
+
+            document.getElementById('agregando').innerHTML = '';
+            carrito[''+id+''] = {descripcion: descripcion, url: url, cantidad: 1};          
+            document.getElementById('agregando').innerHTML = '<ul class="collection">'+dataPop+'</ul>';
+            document.getElementById('modpop').click();
+            setTimeout(function(){ document.getElementById('agregandoCerrar').click() }, 1000);
+          }else{
+            document.getElementById('agregando').innerHTML = '<ul class="collection">'+
+                                                              '<li class="collection-item avatar">'+
+                                                              '<img src="img/alerta.png" class="circle">'+
+                                                                '<span class="title">Este producto ya esta en tu lista.</span>'+
+                                                              '</li></ul>';
+            document.getElementById('modpop').click();
+            setTimeout(function(){ document.getElementById('agregandoCerrar').click() }, 1000);
+          }
         }
 
         function mostrarCarrito(){
