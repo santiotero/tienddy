@@ -66,7 +66,58 @@
           </div>
         </div>
         <div id="resultados">          
-           <ul  id="lista" class="collection">            
+           <ul  id="lista" class="collection">
+
+              <div class="row s6">
+                          <div class="col s12 m4">
+                           <div class="card">
+                            <div class="card-image waves-effect waves-block waves-light">
+                              <img class="activator" src="img/compras.png">
+                            </div>
+                            <div class="card-content">
+                              <span class="card-title activator grey-text text-darken-4">¿Como comprar?<i class="material-icons right">more_vert</i></span>                     
+                            </div>
+                            <div class="card-reveal">
+                              <span class="card-title grey-text text-darken-4">Seguí estos pasos:<i class="material-icons right">arrow_back</i></span>
+                              <br/>
+                              <p>Podes anunciar promociones o combos en este banner</p>
+                              <ul class="collection">
+                                
+                                <li class="collection-item left-align"><p>1) Busca el producto que quieras</p></li>
+                                <li class="collection-item left-align"><p>2) Elegí la cantidad (podes camabiar la descripcion)</p></li>
+                                <li class="collection-item left-align"><p>3) Envia el pedido</p></li>
+                                <li class="collection-item left-align"><p> Listo!</p></li>
+
+                              </ul>
+                            </div>
+                           </div>
+                           </div>
+
+                           <div class="col s12 m4">
+                           <div class="card">
+                            <div class="card-image waves-effect waves-block waves-light">
+                              <img class="activator" src="img/descuentos.png">
+                            </div>
+                            <div class="card-content">
+                              <span class="card-title activator grey-text text-darken-4">Ofertas<i class="material-icons right">more_vert</i></span>                     
+                            </div>
+                            <div class="card-reveal">
+                              <span class="card-title grey-text text-darken-4">Tus ofertas aquí<i class="material-icons right">arrow_back</i></span>
+                              <br/>
+                              <p>Podes anunciar ofertas o combos en este banner</p>
+                              <ul class="collection">
+                                <li class="collection-item avatar"><img src="https://walmartar.vteximg.com.br/arquivos/ids/179739/0779048000037-1.jpg?v=635841448975500000" class="circle"><span class="title">Yerba Mate La Tranquera Con Palo 500 Gr</span><a href="#!" id="14044" class="secondary-content"></a></li>
+
+                                <li class="collection-item avatar"><img src="https://walmartar.vteximg.com.br/arquivos/ids/830171/Azucar-Clasica-Ledesma-1-Kg-1-34033.jpg?v=636685113986830000" class="circle"><span class="title">Azúcar Común Ledesma 1 Kg</span><a href="#!" id="34038" class="secondary-content"></a></li>
+
+                                <li class="collection-item center-align"><p>Todo solo $100</p></li>
+                              </ul>
+                            </div>
+                           </div>
+                           </div>                          
+                           
+                     </div>
+
           </ul>
         </div>
 
@@ -130,7 +181,7 @@
           carrito[''+id+''] = {descripcion: descripcion, url: url, cantidad: 1};          
           document.getElementById('agregando').innerHTML = '<ul class="collection">'+dataPop+'</ul>';
           document.getElementById('modpop').click();
-          setTimeout(function(){ document.getElementById('agregandoCerrar').click() }, 2000);          
+          setTimeout(function(){ document.getElementById('agregandoCerrar').click() }, 1500);          
         }
 
         function mostrarCarrito(){
@@ -141,14 +192,53 @@
               Object.keys(carrito).forEach(function(key) {
                 let dataCarrito = 
                       '<li class="collection-item avatar">' + 
-                      '<img src="'+carrito[key].url+'" class="circle">'+
-                      '<span class="title">'+carrito[key].descripcion+'</span>'+
-                      '</li>';
+                        '<img src="'+carrito[key].url+'" class="circle">'+
+                        '<span class="title">'+carrito[key].descripcion+'</span>'+
+                          '<a href="#!" id="_'+key+'" class="secondary-content"></a>'+ 
+                      '</li>';           
                 document.getElementById('agregandoCarrito').innerHTML += dataCarrito;
+                
+                let tagImenos = document.createElement("i");                    
+                tagImenos.innerHTML = "remove_circle";
+                tagImenos.setAttribute("class", "material-icons");                   
+                tagImenos.setAttribute("onclick", "restar("+key+")");
+                document.getElementById('_'+key+'').appendChild(tagImenos);
+                
+                let spanCant = document.createElement("span");                    
+                spanCant.innerHTML = carrito[key].cantidad;
+                spanCant.setAttribute("class", "title");
+                spanCant.setAttribute("id", 'cant_'+key+'');                
+                document.getElementById('_'+key+'').appendChild(spanCant);
+
+
+                let tagImas = document.createElement("i");                    
+                tagImas.innerHTML = "add_circle";
+                tagImas.setAttribute("class", "material-icons");                   
+                tagImas.setAttribute("onclick", "sumar("+key+")");
+                document.getElementById('_'+key+'').appendChild(tagImas);
+
+              
               });
                     
           }
           document.getElementById('modpopFoot').click();
+
+        }
+
+        function restar(idprod){          
+          
+          if(carrito[''+idprod+''].cantidad >= 1 ){
+            carrito[''+idprod+''].cantidad--;
+            document.getElementById('cant_'+idprod+'').innerHTML =  carrito[''+idprod+''].cantidad;
+          }
+
+        }
+
+        function sumar(idprod){
+          if(carrito[''+idprod+''].cantidad <=14 ){
+            carrito[''+idprod+''].cantidad++;
+            document.getElementById('cant_'+idprod+'').innerHTML =  carrito[''+idprod+''].cantidad;
+          }
 
         }
 
