@@ -38,10 +38,10 @@
           <!-- Modal Structure -->
           <div id="mpop" class="modal">
             <div class="modal-content">
-              <h3>Se agrego al pedido</h3>
+              <h3>Tu pedido</h3>
               <p id="agregando"></p>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" style="display: none;">
               <a href="#!" id="agregandoCerrar" class="modal-close waves-effect waves-green btn-flat">Volver</a>
             </div>
           </div>
@@ -128,15 +128,17 @@
         <div id="mpop2" class="modal bottom-sheet">
           <div class="modal-content">
             <h4>Tu lista:</h4>
-            <p>
+            <p class="center-align">
               <ul  id="agregandoCarrito" class="collection">            
-              </ul>            
+              </ul>                          
             </p>
+            <div class="center-align">
+              <a class="btn-floating btn-large waves-effect waves-light red" onclick="validarCompra()">
+                <i class="material-icons">shopping_cart</i></a>
+                <p>Confirmar pedido</p>
+            </div>
     
-          </div>
-          <div class="modal-footer">
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Volver</a>
-          </div>
+          </div>          
         </div>        
 
         <footer class="page-footer">          
@@ -173,6 +175,34 @@
           var elemsSid = document.querySelectorAll('.sidenav');
           var instances = M.Sidenav.init(elemsSid);
         });
+
+        function confirmar(){
+          let pedidoWhatsApp = '';
+          let cont = 1;
+          Object.keys(carrito).forEach(function(key) {
+              pedidoWhatsApp += ''+cont+')'+carrito[key].descripcion+' ('+carrito[key].cantidad+') \n\ \n\ ';
+              cont++;              
+          });
+          pedidoWhatsApp = "https://api.whatsapp.com/send?phone=5493515632507&text=" + encodeURI(pedidoWhatsApp);          
+          window.location.replace(pedidoWhatsApp);
+        }
+
+        function validarCompra(){
+
+         if(Object.keys(carrito).length > 0 ){          
+            document.getElementById('agregando').innerHTML = '<ul class="collection">'+
+                                                                '<li class="collection-item avatar">'+
+                                                                  '<img src="img/feliz.png" class="circle">'+
+                                                                  '<span class="title">Genial! Estas por confirmar el pedido.</span><br/><br/>'+
+                                                                  '<div class="center-align">'+
+                                                                  '<a class="waves-effect waves-light btn" id="confirmar"><i class="material-icons right">check_circle</i>Ok</a>'+
+                                                                '</li>'+
+                                                              '</ul>';
+              document.getElementById('confirmar').setAttribute("onclick", "confirmar()");
+              document.getElementById('modpop').click();
+           }
+
+        }
 
         function agregar(id,descripcion,url,dataPop){
 
