@@ -466,8 +466,7 @@
           
           let nomb = document.getElementById('nombre_usuario').value;
           let tel  = document.getElementById('telefono_usuario').value;
-          console.log(nomb);
-          console.log(tel);
+          
           if(nomb.length >= 3 && tel.length == 10 ){
               usuario = {nombre: nomb,telefono: tel };             
               pasosCompra('tienda');
