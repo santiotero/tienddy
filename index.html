@@ -284,7 +284,7 @@
 
         function buscar(evento){
 
-          if(event.which == 13){
+          if(event.which == 13 || (window.document.getElementById("autocomplete-input").value).length >= 3 ){
 
               document.getElementById("cargando").style.opacity = "1";
  
