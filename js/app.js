@@ -1,6 +1,15 @@
 
+var url =  window.location.href;
+var urlSw = '/tienddy/sw.js';
+
 if(navigator.serviceWorker){
-   navigator.serviceWorker.register('/sw.js');
+
+   if( url.includes('localhost') || url.includes('127.0.0.1') ){
+      urlSw = '/sw.js';
+   }
+
+   navigator.serviceWorker.register(urlSw);
+   
 }
 
 var usuario = {};
