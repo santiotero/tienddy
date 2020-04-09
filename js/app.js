@@ -46,8 +46,8 @@ window.onload = function() {
                 console.log('User dismissed the A2HS prompt');
               }
               deferredPrompt = null;
-            });
-
+            }); 
+             
 };
 
         document.addEventListener('DOMContentLoaded', function() {
