@@ -19,8 +19,8 @@
               <a href="#!" class="brand-logo">Tienddify</a>
               <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
               <ul class="right hide-on-med-and-down">              
-                <li><a href="#!"><i class="material-icons">person</i></a></li>              
-                <li><a href="#!"><i class="material-icons">store</i></a></li>
+                <li><a href="#!" onclick="validarUsuarioBtn()"><i class="material-icons">person</i></a></li>              
+                <li><a href="#!" onclick="validarTiendaBtn()"><i class="material-icons">store</i></a></li>
                 <li><a href="#!" onclick="mostrarCarrito()"><i class="material-icons">shopping_cart</i></a></li>
                 
               </ul>
@@ -29,8 +29,8 @@
         </div>
 
         <ul class="sidenav" id="mobile-demo">            
-            <li><a href="#!"><i class="material-icons">person</i>Perfil</a></li>
-            <li><a href="#!"><i class="material-icons">store</i>Tienda</a></li>
+            <li><a href="#!" onclick="validarUsuarioBtn()"><i class="material-icons">person</i>Perfil</a></li>
+            <li><a href="#!" onclick="validarTiendaBtn()"><i class="material-icons">store</i>Tienda</a></li>
             <li><a href="#!" onclick="mostrarCarrito()"><i class="material-icons">shopping_cart</i>Carrito</a></li>
             
         </ul>
@@ -386,44 +386,46 @@
         }
 
         function mostrarCarrito(){
-          document.getElementById('agregandoCarrito').innerHTML = 'No hay productos en tu lista.';
-          if(Object.keys(carrito).length > 0 ){
+            if( Object.keys(usuario).length > 0 && Object.keys(tienda).length > 0){
+              document.getElementById('agregandoCarrito').innerHTML = 'No hay productos en tu lista.';
+              if(Object.keys(carrito).length > 0 ){
 
-              document.getElementById('agregandoCarrito').innerHTML = '';
-              Object.keys(carrito).forEach(function(key) {
-                let dataCarrito = 
-                      '<li class="collection-item avatar">' + 
-                        '<img src="'+carrito[key].url+'" class="circle">'+
-                        '<span class="title">'+carrito[key].descripcion+'</span>'+
-                          '<a href="#!" id="_'+key+'" class="secondary-content"></a>'+ 
-                      '</li>';           
-                document.getElementById('agregandoCarrito').innerHTML += dataCarrito;
-                
-                let tagImenos = document.createElement("i");                    
-                tagImenos.innerHTML = "remove_circle";
-                tagImenos.setAttribute("class", "material-icons");                   
-                tagImenos.setAttribute("onclick", "restar("+key+")");
-                document.getElementById('_'+key+'').appendChild(tagImenos);
-                
-                let spanCant = document.createElement("span");                    
-                spanCant.innerHTML = carrito[key].cantidad;
-                spanCant.setAttribute("class", "title");
-                spanCant.setAttribute("id", 'cant_'+key+'');                
-                document.getElementById('_'+key+'').appendChild(spanCant);
-
-
-                let tagImas = document.createElement("i");                    
-                tagImas.innerHTML = "add_circle";
-                tagImas.setAttribute("class", "material-icons");                   
-                tagImas.setAttribute("onclick", "sumar("+key+")");
-                document.getElementById('_'+key+'').appendChild(tagImas);
-
-              
-              });
+                  document.getElementById('agregandoCarrito').innerHTML = '';
+                  Object.keys(carrito).forEach(function(key) {
+                    let dataCarrito = 
+                          '<li class="collection-item avatar">' + 
+                            '<img src="'+carrito[key].url+'" class="circle">'+
+                            '<span class="title">'+carrito[key].descripcion+'</span>'+
+                              '<a href="#!" id="_'+key+'" class="secondary-content"></a>'+ 
+                          '</li>';           
+                    document.getElementById('agregandoCarrito').innerHTML += dataCarrito;
                     
-          }
-          document.getElementById('modpopFoot').click();
+                    let tagImenos = document.createElement("i");                    
+                    tagImenos.innerHTML = "remove_circle";
+                    tagImenos.setAttribute("class", "material-icons");                   
+                    tagImenos.setAttribute("onclick", "restar("+key+")");
+                    document.getElementById('_'+key+'').appendChild(tagImenos);
+                    
+                    let spanCant = document.createElement("span");                    
+                    spanCant.innerHTML = carrito[key].cantidad;
+                    spanCant.setAttribute("class", "title");
+                    spanCant.setAttribute("id", 'cant_'+key+'');                
+                    document.getElementById('_'+key+'').appendChild(spanCant);
 
+
+                    let tagImas = document.createElement("i");                    
+                    tagImas.innerHTML = "add_circle";
+                    tagImas.setAttribute("class", "material-icons");                   
+                    tagImas.setAttribute("onclick", "sumar("+key+")");
+                    document.getElementById('_'+key+'').appendChild(tagImas);
+
+                  
+                  });
+                        
+              }
+              document.getElementById('modpopFoot').click();
+
+          }
         }
 
         function restar(idprod){          
@@ -563,6 +565,18 @@
                                                             '</div>';
 
         }  
+
+        function validarTiendaBtn(){
+          if( Object.keys(usuario).length > 0 ){
+            pasosCompra('tienda');
+          }
+        }
+
+        function validarUsuarioBtn(){
+           if( Object.keys(usuario).length > 0 ){
+            pasosCompra('usuario');
+          } 
+        }
       </script>
 
     </body> 
