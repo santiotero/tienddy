@@ -319,7 +319,7 @@ window.onload = function() {
             pasosCompra('tienda');
           }
         }
-
+ 
         function validarUsuarioBtn(){
            if( Object.keys(usuario).length > 0 ){
             pasosCompra('usuario');

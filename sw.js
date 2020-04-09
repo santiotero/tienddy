@@ -78,5 +78,5 @@ self.addEventListener('fetch', e => {
 
 
 	e.respondWith(respuesta);
-
+ 
 });    
