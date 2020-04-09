@@ -169,7 +169,7 @@
 
               <div class="row s6">
 
-                          <div class="col s12 m4">
+                        <div class="col s12 m4">
                            <div class="card">
                             <div class="card-image waves-effect waves-block waves-light">
                               <img class="activator" src="img/compras.png">
@@ -243,7 +243,9 @@
                 <i class="material-icons">assignment_turned_in</i></a>
                 <p>Confirmar pedido</p>
             </div>
-    
+            <div class="modal-footer" style="display: none;">
+              <a href="#!" id="carritoCerrar" class="modal-close waves-effect waves-green btn-flat"></a>
+            </div>
           </div>          
         </div>        
 
@@ -326,7 +328,7 @@
           pedidoWhatsApp += ' solicitó el siguiente pedido: \n \n ';
 
           Object.keys(carrito).forEach(function(key) {
-              pedidoWhatsApp += ''+cont+')'+carrito[key].descripcion+' ('+carrito[key].cantidad+') \n\ \n\ ';
+              pedidoWhatsApp += ''+cont+')'+carrito[key].descripcion+' ('+carrito[key].cantidad+' unidad/es) \n\ \n\ ';
               cont++;              
           });
 
@@ -334,7 +336,12 @@
           pedidoWhatsApp += ' Teléfono de contacto: '+usuario.telefono+' \n  ';
 
           pedidoWhatsApp = "https://api.whatsapp.com/send?phone=549"+tienda.telefono+"&text=" + encodeURI(pedidoWhatsApp);          
-          window.location.replace(pedidoWhatsApp);
+          carrito = {};
+          document.getElementById('agregandoCarrito').innerHTML = 'No hay productos en tu lista.';
+          document.getElementById('agregandoCerrar').click(); 
+          document.getElementById('carritoCerrar').click();       
+          agradecimiento();
+          //window.location.replace(pedidoWhatsApp);          
         }
 
         function validarCompra(){
@@ -541,6 +548,20 @@
             tienda = {telefono: tiendaSel, ciudad: ciudad };
             pasosCompra('compra');
           }        
+        }
+
+        function agradecimiento(){
+
+          document.getElementById('lista').innerHTML = '<div class="row s6">'+
+                                                              '<div class="col s12 m4">'+
+                                                                '<div class="card">'+
+                                                                  '<div class="card-image waves-effect waves-block waves-light">'+
+                                                                    '<img class="activator" src="img/agradecimiento.png">'+
+                                                                  '</div>'+ 
+                                                                '</div>'+
+                                                              '</div>'+
+                                                            '</div>';
+
         }  
       </script>
 
