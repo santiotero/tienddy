@@ -19,6 +19,7 @@ const APP_SHELL = [
 
 const APP_SHELL_INMUT = [
 	'css/materialize.min.css',
+	'css/pwa.css',
 	'https://fonts.googleapis.com/icon?family=Material+Icons',
 	'js/materialize.min.js'
 ];
@@ -78,4 +79,4 @@ self.addEventListener('fetch', e => {
 
 	e.respondWith(respuesta);
 
-});   
+});    

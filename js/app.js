@@ -324,4 +324,4 @@ window.onload = function() {
            if( Object.keys(usuario).length > 0 ){
             pasosCompra('usuario');
           } 
-        }
+        } 
