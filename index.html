@@ -13,18 +13,20 @@
     <body>
       <div id="main">
 
-        <nav>
-          <div class="nav-wrapper">
-            <a href="#!" class="brand-logo">Tienddify</a>
-            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-            <ul class="right hide-on-med-and-down">              
-              <li><a href="#!"><i class="material-icons">person</i></a></li>              
-              <li><a href="#!"><i class="material-icons">store</i></a></li>
-              <li><a href="#!" onclick="mostrarCarrito()"><i class="material-icons">shopping_cart</i></a></li>
-              
-            </ul>
-          </div>
-        </nav>
+        <div class="navbar-fixed">
+          <nav>
+            <div class="nav-wrapper">
+              <a href="#!" class="brand-logo">Tienddify</a>
+              <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+              <ul class="right hide-on-med-and-down">              
+                <li><a href="#!"><i class="material-icons">person</i></a></li>              
+                <li><a href="#!"><i class="material-icons">store</i></a></li>
+                <li><a href="#!" onclick="mostrarCarrito()"><i class="material-icons">shopping_cart</i></a></li>
+                
+              </ul>
+            </div>
+          </nav>
+        </div>
 
         <ul class="sidenav" id="mobile-demo">            
             <li><a href="#!"><i class="material-icons">person</i>Perfil</a></li>
@@ -42,7 +44,7 @@
           <!-- Modal Structure -->
           <div id="mpop" class="modal">
             <div class="modal-content">
-              <h3>Tu pedido</h3>
+              <h3 id="tituloAgregando"></h3>
               <p id="agregando"></p>
             </div>
             <div class="modal-footer" style="display: none;">
@@ -69,8 +71,15 @@
                             <div class="input-field col s12">
                               <i class="material-icons prefix">phone</i>
                               <input id="telefono_usuario" type="tel" class="validate">
-                              <label for="telefono_usuario">Teléfono (sin el 0 y sin el 15)</label>
+                              <label for="telefono_usuario">Teléfono</label>
                             </div>                                                              
+                          </li>
+                          <li>
+                            <div class="input-field col s12">
+                              <i class="material-icons prefix">location_on</i>
+                              <input placeholder="Domicilio" id="domicilio_usuario" type="text" class="validate">
+                              <label for="domicilio_usuario">Domicilio</label>
+                            </div>
                           </li>
                           <li class="center-align">
                             <button class="btn waves-effect waves-light red lighten-2" onclick="validarUsuario()" type="button" name="action">Siguiente
@@ -163,6 +172,31 @@
                           <div class="col s12 m4">
                            <div class="card">
                             <div class="card-image waves-effect waves-block waves-light">
+                              <img class="activator" src="img/compras.png">
+                            </div>
+                            <div class="card-content">
+                              <span class="card-title activator grey-text text-darken-4">¿Como comprar?<i class="material-icons right">more_vert</i></span>                     
+                            </div>
+                            <div class="card-reveal">
+                              <span class="card-title grey-text text-darken-4">Seguí estos pasos:<i class="material-icons right">arrow_back</i></span>
+                              <br/>
+                              <p>Podes anunciar promociones o combos en este banner</p>
+                              <ul class="collection">
+                                
+                                <li class="collection-item left-align"><p>1) Busca el producto que quieras</p></li>
+                                <li class="collection-item left-align"><p>2) Elegí la cantidad (el precio lo arreglas con la tienda)</p></li>
+                                <li class="collection-item left-align"><p>3) Envia el pedido</p></li>
+                                <li class="collection-item left-align"><p> Listo!</p></li>
+
+                              </ul>
+                            </div>
+                           </div>
+                           </div>
+
+
+                          <!-- <div class="col s12 m4">
+                           <div class="card">
+                            <div class="card-image waves-effect waves-block waves-light">
                               <img class="activator" src="img/descuentos.png">
                             </div>
                             <div class="card-content">
@@ -181,34 +215,15 @@
                               </ul>
                             </div>
                            </div>
-                           </div> 
+                           </div>                           
+                          </div> -->
 
-                          <div class="col s12 m4">
-                           <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                              <img class="activator" src="img/compras.png">
-                            </div>
-                            <div class="card-content">
-                              <span class="card-title activator grey-text text-darken-4">¿Como comprar?<i class="material-icons right">more_vert</i></span>                     
-                            </div>
-                            <div class="card-reveal">
-                              <span class="card-title grey-text text-darken-4">Seguí estos pasos:<i class="material-icons right">arrow_back</i></span>
-                              <br/>
-                              <p>Podes anunciar promociones o combos en este banner</p>
-                              <ul class="collection">
-                                
-                                <li class="collection-item left-align"><p>1) Busca el producto que quieras</p></li>
-                                <li class="collection-item left-align"><p>2) Elegí la cantidad (podes camabiar la descripción)</p></li>
-                                <li class="collection-item left-align"><p>3) Envia el pedido</p></li>
-                                <li class="collection-item left-align"><p> Listo!</p></li>
-
-                              </ul>
-                            </div>
-                           </div>
-                           </div>                                                    
-                           
-                     </div>
-
+          </ul>
+          <ul  id="lista" class="collection">
+              <li class="collection-item center-align">
+                <a class="btn-floating btn-large waves-effect waves-light red" onclick="mostrarCarrito()">
+                  <i class="material-icons">shopping_cart</i></a>
+              </li>
           </ul>
         </div>
 
@@ -218,14 +233,14 @@
         <!-- Modal Structure -->
         <div id="mpop2" class="modal bottom-sheet">
           <div class="modal-content">
-            <h4>Tu lista</h4>
+            <h4>Tu pedido</h4>
             <p class="center-align">
               <ul  id="agregandoCarrito" class="collection">            
               </ul>                          
             </p>
             <div class="center-align">
               <a class="btn-floating btn-large waves-effect waves-light red pulse" onclick="validarCompra()">
-                <i class="material-icons">shopping_cart</i></a>
+                <i class="material-icons">assignment_turned_in</i></a>
                 <p>Confirmar pedido</p>
             </div>
     
@@ -304,32 +319,38 @@
         }
 
         function confirmar(){
-          let pedidoWhatsApp = 'Nuevo pedido desde Tiendify! \n\ \n\ ';
+          let pedidoWhatsApp = 'Nuevo pedido desde Tienddify! \n\ \n\ ';
           let cont = 1;
 
-          pedidoWhatsApp += ' El usuario ' + usuario.nombre + ' (' + usuario.telefono +') \n ';
-          pedidoWhatsApp += ' solicito el siguiente pedido: \n \n ';
+          pedidoWhatsApp += ' El usuario ' + usuario.nombre + ' \n ';
+          pedidoWhatsApp += ' solicitó el siguiente pedido: \n \n ';
 
           Object.keys(carrito).forEach(function(key) {
               pedidoWhatsApp += ''+cont+')'+carrito[key].descripcion+' ('+carrito[key].cantidad+') \n\ \n\ ';
               cont++;              
           });
+
+          pedidoWhatsApp += ' Domicilio de entrega: '+usuario.domicilio+' \n  ';
+          pedidoWhatsApp += ' Teléfono de contacto: '+usuario.telefono+' \n  ';
+
           pedidoWhatsApp = "https://api.whatsapp.com/send?phone=549"+tienda.telefono+"&text=" + encodeURI(pedidoWhatsApp);          
           window.location.replace(pedidoWhatsApp);
         }
 
         function validarCompra(){
 
-         if(Object.keys(carrito).length > 0 ){          
+         if(Object.keys(carrito).length > 0 ){
+            document.getElementById('tituloAgregando').innerHTML = 'Ya casi terminás!';          
             document.getElementById('agregando').innerHTML = '<ul class="collection">'+
                                                                 '<li class="collection-item avatar">'+
                                                                   '<img src="img/feliz.png" class="circle">'+
-                                                                  '<span class="title">Genial! Estas por confirmar el pedido.</span><br/><br/>'+
+                                                                  '<span class="title">Estás por confirmar el pedido.</span><br/><br/>'+
                                                                   '<div class="center-align">'+
                                                                   '<a class="waves-effect waves-light btn" id="confirmar"><i class="material-icons right">check_circle</i>Ok</a>'+
                                                                   '<div/>'+
                                                                 '</li>'+
                                                               '</ul>';
+
               document.getElementById('confirmar').setAttribute("onclick", "confirmar()");
               document.getElementById('modpop').click();
            }
@@ -339,13 +360,14 @@
         function agregar(id,descripcion,url,dataPop){
 
           if( carrito[''+id+''] == window.undefined){
-
+            document.getElementById('tituloAgregando').innerHTML = 'Se agregó a tu pedido:'; 
             document.getElementById('agregando').innerHTML = '';
             carrito[''+id+''] = {descripcion: descripcion, url: url, cantidad: 1};          
             document.getElementById('agregando').innerHTML = '<ul class="collection">'+dataPop+'</ul>';
             document.getElementById('modpop').click();
             setTimeout(function(){ document.getElementById('agregandoCerrar').click() }, 1000);
           }else{
+            document.getElementById('tituloAgregando').innerHTML = 'Ups!';  
             document.getElementById('agregando').innerHTML = '<ul class="collection">'+
                                                               '<li class="collection-item avatar">'+
                                                               '<img src="img/alerta.png" class="circle">'+
@@ -463,11 +485,11 @@
 
         function validarUsuario(){
           
-          let nomb = document.getElementById('nombre_usuario').value;
-          let tel  = document.getElementById('telefono_usuario').value;
-          
-          if(nomb.length >= 3 && tel.length == 10 ){
-              usuario = {nombre: nomb,telefono: tel };             
+          let nomb  = document.getElementById('nombre_usuario').value;
+          let tel   = document.getElementById('telefono_usuario').value;
+          let domi = document.getElementById('domicilio_usuario').value;
+          if(nomb.length >= 3 && tel.length == 10 && domi.length >= 4 ){
+              usuario = {nombre: nomb,telefono: tel, domicilio: domi};             
               pasosCompra('tienda');
           }else{
               let error = ''
@@ -477,10 +499,14 @@
               if(tel.length != 10){
                 error += '<span class="title"> - El teléfono debe tener 10 caractéres.</span><br/><br/>';
               }
+              if(domi.length < 4){
+                error += '<span class="title"> - El domicilio es demasiado corto.</span><br/><br/>';
+              }
+              document.getElementById('tituloAgregando').innerHTML = 'Ups!'; 
               document.getElementById('agregando').innerHTML = '<ul class="collection">'+
                                                                 '<li class="collection-item avatar">'+
                                                                   '<img src="img/alerta.png" class="circle">'+
-                                                                  '<span class="title">Ups, los datos no son correctos.</span><br/><br/>'+
+                                                                  '<span class="title">Los datos no son correctos.</span><br/><br/>'+
                                                                   error
                                                                 '</li>'+
                                                                '</ul>';              
@@ -502,10 +528,11 @@
             if(tiendaSel == ''){
                error += '<span class="title"> - Tenés que elegir una tienda.</span><br/><br/>';
             }
+              document.getElementById('tituloAgregando').innerHTML = 'Ups!'; 
               document.getElementById('agregando').innerHTML = '<ul class="collection">'+
                                                                 '<li class="collection-item avatar">'+
                                                                   '<img src="img/alerta.png" class="circle">'+
-                                                                  '<span class="title">Ups, los datos no son correctos.</span><br/><br/>'+
+                                                                  '<span class="title">Los datos no son correctos.</span><br/><br/>'+
                                                                   error
                                                                 '</li>'+
                                                                '</ul>';              
