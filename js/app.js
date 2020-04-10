@@ -16,9 +16,18 @@ var usuario = {};
 var tienda = {};
 var carrito = {};
 
-window.onload = function() {          
+window.onload = function() {
+          
+          let url_string = window.location.href;
+          let url = new URL(url_string);
+          let c = url.searchParams.get("source");
 
-          pasosCompra('instalacion');
+          if(c == 'pwa'){
+            pasosCompra('usuario');
+          }else{
+            pasosCompra('instalacion');
+          }          
+
           document.getElementById("cargando").style.opacity = "0";
           document.getElementById("modpop").style.display = "none";
           document.getElementById("modpopFoot").style.display = "none";
@@ -70,18 +79,21 @@ window.onload = function() {
 
           switch(operacion){
             case 'instalacion':
+              document.getElementById("instalacion").style.display = "block";
               document.getElementById("usuario").style.display = "none";                  
               document.getElementById("tienda").style.display = "none";
               document.getElementById("compra").style.display = "none";
             break;
             case 'usuario':
+              document.getElementById("instalacion").style.display = "none";
               document.getElementById("usuario").style.display = "block";                  
               document.getElementById("tienda").style.display = "none";
               document.getElementById("compra").style.display = "none";
             break;
 
             case 'tienda':
-              if(usuario){                                 
+              if(usuario){
+                document.getElementById("instalacion").style.display = "none";                                 
                 document.getElementById("usuario").style.display = "none";
                 document.getElementById("tienda").style.display = "block";
                 document.getElementById("compra").style.display = "none";
@@ -89,6 +101,7 @@ window.onload = function() {
             break;
 
             case 'compra':
+              document.getElementById("instalacion").style.display = "none";
               document.getElementById("usuario").style.display = "none";
               document.getElementById("tienda").style.display = "none";
               document.getElementById("compra").style.display = "block";
@@ -351,7 +364,7 @@ window.onload = function() {
         }
  
         function validarUsuarioBtn(){
-           if( Object.keys(usuario).length > 0 ){
+          if( Object.keys(usuario).length > 0 ){
             pasosCompra('usuario');
           } 
         }
@@ -367,5 +380,6 @@ window.onload = function() {
                                                                 '</div>'+
                                                               '</div>'+
                                                             '</div>';
+        
 
         } 
