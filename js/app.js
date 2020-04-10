@@ -61,6 +61,10 @@ window.onload = function() {
               });
           });
 
+          window.addEventListener('appinstalled', (evt) => {
+             aplicacionInstalda();
+          });
+
 };
 
         document.addEventListener('DOMContentLoaded', function() {
