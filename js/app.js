@@ -18,7 +18,7 @@ var carrito = {};
 
 window.onload = function() {          
 
-          pasosCompra('usuario');
+          pasosCompra('instalacion');
           document.getElementById("cargando").style.opacity = "0";
           document.getElementById("modpop").style.display = "none";
           document.getElementById("modpopFoot").style.display = "none";
@@ -28,6 +28,8 @@ window.onload = function() {
             buscar(event);
           });
 
+          const buttonAdd = document.getElementById('instalar');
+
           let deferredPrompt;
           window.addEventListener('beforeinstallprompt', (e) => {
             // Prevent Chrome 67 and earlier from automatically showing the prompt
@@ -35,19 +37,21 @@ window.onload = function() {
             // Stash the event so it can be triggered later.
             deferredPrompt = e;
           });
-          // Show the prompt
-          deferredPrompt.prompt();
-          // Wait for the user to respond to the prompt
-          deferredPrompt.userChoice
-            .then((choiceResult) => {
-              if (choiceResult.outcome === 'accepted') {
-                console.log('User accepted the A2HS prompt');
-              } else {
-                console.log('User dismissed the A2HS prompt');
-              }
-              deferredPrompt = null;
-            }); 
-             
+
+          // Add event click function for Add button
+          buttonAdd.addEventListener('click', (e) => {
+            // Show the prompt
+            deferredPrompt.prompt();
+            // Wait for the user to respond to the prompt
+            deferredPrompt.userChoice
+              .then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {                  
+                  aplicacionInstalda();
+                }
+                deferredPrompt = null;
+              });
+          });
+
 };
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -65,6 +69,11 @@ window.onload = function() {
         function pasosCompra(operacion){
 
           switch(operacion){
+            case 'instalacion':
+              document.getElementById("usuario").style.display = "none";                  
+              document.getElementById("tienda").style.display = "none";
+              document.getElementById("compra").style.display = "none";
+            break;
             case 'usuario':
               document.getElementById("usuario").style.display = "block";                  
               document.getElementById("tienda").style.display = "none";
@@ -345,4 +354,18 @@ window.onload = function() {
            if( Object.keys(usuario).length > 0 ){
             pasosCompra('usuario');
           } 
+        }
+
+        function aplicacionInstalda(){
+
+          document.getElementById('instalacion').innerHTML = '<div class="row s6">'+
+                                                              '<div class="col s12 m4">'+
+                                                                '<div class="card">'+
+                                                                  '<div class="card-image waves-effect waves-block waves-light">'+
+                                                                    '<img class="activator" src="img/instalado.png">'+
+                                                                  '</div>'+ 
+                                                                '</div>'+
+                                                              '</div>'+
+                                                            '</div>';
+
         } 
