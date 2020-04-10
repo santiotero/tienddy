@@ -221,9 +221,16 @@ window.onload = function() {
 
         function restar(idprod){          
           
-          if(carrito[''+idprod+''].cantidad >= 1 ){
+          if(carrito[''+idprod+''].cantidad > 1 ){
             carrito[''+idprod+''].cantidad--;
             document.getElementById('cant_'+idprod+'').innerHTML =  carrito[''+idprod+''].cantidad;
+          }else{
+            delete carrito[''+idprod+''];
+            document.getElementById('_'+idprod+'').parentElement.remove();
+
+            if(Object.keys(carrito).length  == 0){
+              document.getElementById('agregandoCarrito').innerHTML = 'No hay productos en tu lista.';
+            }
           }
 
         }
