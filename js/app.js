@@ -15,7 +15,7 @@ if(navigator.serviceWorker){
 var usuario = {};
 var tienda = {};
 var carrito = {};
-
+ 
 window.onload = function() {
           
           let url_string = window.location.href;
