@@ -381,7 +381,7 @@ window.onload = function() {
         }
 
         function aplicacionInstalda(){
-
+ 
           document.getElementById('instalacion').innerHTML = '<div class="row s6">'+
                                                               '<div class="col s12 m4">'+
                                                                 '<div class="card">'+
