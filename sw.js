@@ -1,4 +1,4 @@
-importScripts('js/sw_util.js');
+importScripts('js/sw_util.js'); 
 
 
 const STATIC_CACHE = 'static-v1';
