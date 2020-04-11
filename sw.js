@@ -16,7 +16,7 @@ const APP_SHELL = [
 	'img/instalado.png',
 	'img/instalar.png',
 	//'js/app.js',
-	//'js/sw_util.js'
+	//'js/sw_util.js'  
 ];
 
 const APP_SHELL_INMUT = [

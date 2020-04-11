@@ -1,5 +1,5 @@
 
-var url =  window.location.href; 
+var url =  window.location.href;   
 var urlSw = '/tienddy/sw.js';
     
 if(navigator.serviceWorker){
