@@ -29,7 +29,7 @@ window.onload = function() {
           if(c == 'pwa' && window.matchMedia('(display-mode: standalone)').matches ){                    
              pasosCompra('usuario');            
           }else{ 
-             pasosCompra('instalacion');
+             pasosCompra('instalacion'); 
           }          
 
           document.getElementById("cargando").style.opacity = "0";
