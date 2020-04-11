@@ -27,9 +27,9 @@ window.onload = function() {
           let c = url.searchParams.get("source");   
           
           if(c == 'pwa'){                    
-            pasosCompra('usuario');            
+             pasosCompra('usuario');            
           }else{ 
-            pasosCompra('instalacion');
+             pasosCompra('instalacion');
           }          
 
           document.getElementById("cargando").style.opacity = "0";
