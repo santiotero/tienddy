@@ -15,7 +15,7 @@ const APP_SHELL =  [
 	'img/feliz.png',
 	'img/instalado.png',
 	'img/instalar.png',
-	//'js/app.js', //-
+	//'js/app.js', 
 	//'js/sw_util.js'  
 ];
  
