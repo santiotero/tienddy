@@ -15,7 +15,7 @@ if(navigator.serviceWorker){
 var usuario = {};
 var tienda = {};
 var carrito = {};
-
+  
 var db = new PouchDB('TNDFY_1');
 var remoteCouch = false;
 var resPouch = false;
