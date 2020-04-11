@@ -2,7 +2,7 @@ importScripts('js/sw_util.js');
 
   
 const STATIC_CACHE = 'static-v9.3';
-const DYNAMIC_CACHE = 'dynamic-v9.4';
+const DYNAMIC_CACHE = 'dynamic-v9.5';
 const INMUTABLE_CACHE = 'inmutable-v1';
 
 const APP_SHELL =  [
@@ -15,7 +15,7 @@ const APP_SHELL =  [
 	'img/feliz.png',
 	'img/instalado.png',
 	'img/instalar.png',
-	//'js/app.js',
+	//'js/app.js', //-
 	//'js/sw_util.js'  
 ];
  
