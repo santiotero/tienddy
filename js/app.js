@@ -26,8 +26,7 @@ window.onload = function() {
           let url = new URL(url_string);
           let c = url.searchParams.get("source");   
           
-          if(c == 'pwa' && window.matchMedia('(display-mode: standalone)').matches ){
-             alert('instalda');                    
+          if(c == 'pwa' && window.matchMedia('(display-mode: standalone)').matches ){                               
              pasosCompra('usuario');            
           }else{ 
              pasosCompra('instalacion'); 
@@ -86,6 +85,8 @@ window.onload = function() {
               document.getElementById("nombre_usuario").focus();
               document.getElementById("telefono_usuario").focus();
               document.getElementById("domicilio_usuario").focus();
+
+              pasosCompra('tienda');
 
             }
             
