@@ -46,7 +46,6 @@ self.addEventListener('install', e => {
 self.addEventListener('activate', e => { 
  
     const respuesta = caches.keys().then( keys => {
- 	console.log('s');
         keys.forEach( key => {
  
             if (  key !== STATIC_CACHE && key.includes('static') ) {
