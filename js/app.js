@@ -10,7 +10,7 @@ if(navigator.serviceWorker){
 
    navigator.serviceWorker.register(urlSw);
   
-}
+} 
 
 var usuario = {};
 var tienda = {};
