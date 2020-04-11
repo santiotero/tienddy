@@ -23,7 +23,8 @@ const APP_SHELL_INMUT = [
 	'css/materialize.min.css',
 	'css/pwa.css',
 	'https://fonts.googleapis.com/icon?family=Material+Icons',
-	'js/materialize.min.js'
+	'js/materialize.min.js',
+	'js/pouchdb.min.js'
 ];
 
 self.addEventListener('install', e => {

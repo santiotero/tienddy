@@ -15,15 +15,19 @@ if(navigator.serviceWorker){
 var usuario = {};
 var tienda = {};
 var carrito = {};
- 
-window.onload = function() {
+
+var db = new PouchDB('TNDFY');
+var remoteCouch = false;
+var resPouch = false;
+
+window.onload = function() {          
           
           let url_string = window.location.href;
           let url = new URL(url_string);
-          let c = url.searchParams.get("source");
-
-          if(c == 'pwa'){
-            pasosCompra('usuario');
+          let c = url.searchParams.get("source");   
+          
+          if(c != 'pwa'){                  
+            pasosCompra('usuario');            
           }else{
             pasosCompra('instalacion');
           }          
@@ -68,6 +72,27 @@ window.onload = function() {
 };
 
         document.addEventListener('DOMContentLoaded', function() {
+
+          db.allDocs({include_docs: true, descending: true}).then(doc => {
+            
+            resPouch = doc; 
+            if(resPouch.rows.length > 0){
+              
+              document.getElementById("nombre_usuario").value = resPouch.rows[0].doc.nombre;
+              document.getElementById("telefono_usuario").value = resPouch.rows[0].doc.telefono;
+              document.getElementById("domicilio_usuario").value = resPouch.rows[0].doc.domicilio;
+
+              document.getElementById("nombre_usuario").focus();
+              document.getElementById("telefono_usuario").focus();
+              document.getElementById("domicilio_usuario").focus();
+
+              pasosCompra('tienda');
+
+            }
+            
+          });
+            
+
           var elemsMod = document.querySelectorAll('.modal');
           modalpop = M.Modal.init(elemsMod);
 
@@ -300,7 +325,8 @@ window.onload = function() {
           let tel   = document.getElementById('telefono_usuario').value;
           let domi = document.getElementById('domicilio_usuario').value;
           if(nomb.length >= 3 && tel.length == 10 && domi.length >= 4 ){
-              usuario = {nombre: nomb,telefono: tel, domicilio: domi};             
+              usuario = {nombre: nomb,telefono: tel, domicilio: domi};
+              addPouch(tel, nomb, domi);              
               pasosCompra('tienda');
           }else{
               let error = ''
@@ -393,4 +419,14 @@ window.onload = function() {
                                                             '</div>';
         
 
-        } 
+        }
+  
+        function addPouch(telefono, nombre, domicilio) {
+          var datos = {
+            _id: telefono,
+            nombre: nombre,
+            domicilio: domicilio,
+            telefono: telefono
+          };
+          db.put(datos);
+        }
