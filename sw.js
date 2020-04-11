@@ -72,11 +72,15 @@ self.addEventListener('fetch', e => {
 
 	
 	let respuesta;
-	if( e.request.url.includes('walmart') && e.request.url.includes('app.js') ){
+	if( e.request.url.includes('walmart') || e.request.url.includes('app.js') ){
 
 		respuesta = fetch(e.request).then( res => {
-		 	actualizaCacheDinamico(DYNAMIC_CACHE, e.request, res);
-		 	return res.clone();
+		 	if(res.ok){
+			 	actualizaCacheDinamico(DYNAMIC_CACHE, e.request, res);
+			 	return res.clone();
+		 	}else{
+		 		return 'Ups, parece que algo falló. Intenta de nuevo.';
+		 	}
 		}).catch(err => {
 			return caches.match(e.request);
 		});
