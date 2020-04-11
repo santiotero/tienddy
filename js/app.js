@@ -86,7 +86,7 @@ window.onload = function() {
               document.getElementById("telefono_usuario").focus();
               document.getElementById("domicilio_usuario").focus();
 
-              pasosCompra('tienda');
+              pasosCompra('tienda'); // -
 
             }
             
