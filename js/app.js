@@ -16,7 +16,7 @@ var usuario = {};
 var tienda = {};
 var carrito = {};
   
-var db = new PouchDB('TNDFY_1');
+var db = new PouchDB('TNDFY_3');
 var remoteCouch = false;
 var resPouch = false;
 
