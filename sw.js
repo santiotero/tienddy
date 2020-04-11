@@ -82,7 +82,7 @@ self.addEventListener('fetch', e => {
 		 		return caches.match(e.request);
 		 	}
 		}).catch(err => {
-			return caches.match(e.request);
+			return caches.match(e.request);  //
 		});
 
 	/*}else{
