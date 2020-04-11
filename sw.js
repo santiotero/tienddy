@@ -85,7 +85,7 @@ self.addEventListener('fetch', e => {
 			return caches.match(e.request);  //
 		});
 
-	/*}else{
+	/* }else{
 
 		respuesta = caches.match(e.request).then( res => {
 			if(res){
