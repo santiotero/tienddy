@@ -5,7 +5,7 @@ const STATIC_CACHE = 'static-v9.3';
 const DYNAMIC_CACHE = 'dynamic-v9.4';
 const INMUTABLE_CACHE = 'inmutable-v1';
 
-const APP_SHELL = [
+const APP_SHELL =  [
 	//'/',   
 	'index.html',
 	'img/favicon.png',
