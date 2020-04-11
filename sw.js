@@ -1,8 +1,8 @@
 importScripts('js/sw_util.js'); 
 
   
-const STATIC_CACHE = 'static-v9.5';
-const DYNAMIC_CACHE = 'dynamic-v9.5';
+const STATIC_CACHE = 'static-v9.6.0';
+const DYNAMIC_CACHE = 'dynamic-v9.6.0';
 const INMUTABLE_CACHE = 'inmutable-v1';
 
 const APP_SHELL =  [
@@ -71,10 +71,10 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
 
 	
-	let respuesta;
-	if( e.request.url.includes('walmart') || e.request.url.includes('app.js') ){
+	//let respuesta;
+	//if( e.request.url.includes('walmart') || e.request.url.includes('app.js') ){
 
-		respuesta = fetch(e.request).then( res => {
+	const respuesta = fetch(e.request).then( res => {
 		 	if(res.ok){
 			 	actualizaCacheDinamico(DYNAMIC_CACHE, e.request, res);
 			 	return res.clone();
@@ -85,10 +85,11 @@ self.addEventListener('fetch', e => {
 			return caches.match(e.request);
 		});
 
-	}else{
+	/*}else{
 
 		respuesta = caches.match(e.request).then( res => {
-			if(res){				
+			if(res){
+				actualizaCacheDinamico(DYNAMIC_CACHE, e.request, newRes);				
 				return res;
 			}else{
 				return fetch(e.request).then( newRes => {
@@ -97,13 +98,9 @@ self.addEventListener('fetch', e => {
 					
 			}
 		});
-
-
-	}
+	}*/
 	
 
 
-	e.respondWith(respuesta);
-	respuesta = null;
- 
+	e.respondWith(respuesta); 
 });
