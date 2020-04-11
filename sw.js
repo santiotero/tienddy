@@ -79,7 +79,7 @@ self.addEventListener('fetch', e => {
 			 	actualizaCacheDinamico(DYNAMIC_CACHE, e.request, res);
 			 	return res.clone();
 		 	}else{ 
-		 		return 'Ups, parece que algo falló. Intenta de nuevo.';
+		 		return caches.match(e.request);
 		 	}
 		}).catch(err => {
 			return caches.match(e.request);
