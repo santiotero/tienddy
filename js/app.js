@@ -19,7 +19,7 @@ var carrito = {};
 var db = new PouchDB('TNDFY_3');
 var remoteCouch = false;
 var resPouch = false;
-
+ 
 window.onload = function() {          
           
           let url_string = window.location.href;

@@ -18,7 +18,7 @@ const APP_SHELL = [
 	//'js/app.js',
 	//'js/sw_util.js'  
 ];
-
+ 
 const APP_SHELL_INMUT = [
 	'css/materialize.min.css',
 	'css/pwa.css',
