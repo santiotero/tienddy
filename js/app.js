@@ -428,5 +428,5 @@ window.onload = function() {
             domicilio: domicilio,
             telefono: telefono
           };
-          db.put(datos);
+          db.put(datos); 
         }        
