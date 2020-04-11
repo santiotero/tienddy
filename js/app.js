@@ -28,7 +28,7 @@ window.onload = function() {
           
           if(c == 'pwa'){                    
             pasosCompra('usuario');            
-          }else{
+          }else{ 
             pasosCompra('instalacion');
           }          
 

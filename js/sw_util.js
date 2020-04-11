@@ -16,4 +16,20 @@ function actualizaCacheDinamico(dynCache, req, res){
 	}
  
 
-}    
+} 
+
+function limpiarCache(nombreCache){
+
+	caches.open(nombreCache).then( cache => {
+
+		return cache.keys().then(keys => {
+			Object.keys(keys).forEach(function(key) {				
+				cache.delete(keys[key]);
+			});
+
+		});
+
+	});
+
+
+}

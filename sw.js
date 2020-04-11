@@ -1,8 +1,8 @@
 importScripts('js/sw_util.js'); 
 
   
-const STATIC_CACHE = 'static-v7';
-const DYNAMIC_CACHE = 'dynamic-v7';
+const STATIC_CACHE = 'static-v9.1';
+const DYNAMIC_CACHE = 'dynamic-v9.2';
 const INMUTABLE_CACHE = 'inmutable-v1';
 
 const APP_SHELL = [
@@ -39,20 +39,26 @@ self.addEventListener('install', e => {
 
 	e.waitUntil( Promise.all([{cacheStatic,cacheInmut}]) );
 
+	self.skipWaiting();
+
 });
 
 self.addEventListener('activate', e => {
  
     const respuesta = caches.keys().then( keys => {
- 
+ 	console.log('s');
         keys.forEach( key => {
  
             if (  key !== STATIC_CACHE && key.includes('static') ) {
-                return caches.delete(key);
+            	caches.delete(key);
+            	localStorage.clear();
+            	location.reload();	 			
             }
  
             if (  key !== DYNAMIC_CACHE && key.includes('dynamic') ) {
-                return caches.delete(key);
+            	caches.delete(key);
+            	localStorage.clear();
+            	location.reload();           
             }
  
         });
@@ -63,23 +69,38 @@ self.addEventListener('activate', e => {
  
 });
 
-
-
-
 self.addEventListener('fetch', e => {
 
-	const respuesta = caches.match(e.request).then( res => {
-		if(res){
-			return res;
-		}else{
-			return fetch(e.request).then( newRes => {
-				return actualizaCacheDinamico(DYNAMIC_CACHE, e.request, newRes);
-			});
-				
-		}
-	});
+	
+	let respuesta;
+	if( e.request.url.includes('walmart') && e.request.url.includes('app.js') ){
+
+		respuesta = fetch(e.request).then( res => {
+		 	actualizaCacheDinamico(DYNAMIC_CACHE, e.request, res);
+		 	return res.clone();
+		}).catch(err => {
+			return caches.match(e.request);
+		});
+
+	}else{
+
+		respuesta = caches.match(e.request).then( res => {
+			if(res){				
+				return res;
+			}else{
+				return fetch(e.request).then( newRes => {
+					return actualizaCacheDinamico(DYNAMIC_CACHE, e.request, newRes);
+				});
+					
+			}
+		});
+
+
+	}
+	
 
 
 	e.respondWith(respuesta);
+	respuesta = null;
  
-});    
+});
