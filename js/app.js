@@ -26,7 +26,8 @@ window.onload = function() {
           let url = new URL(url_string);
           let c = url.searchParams.get("source");   
           
-          if(c == 'pwa' && window.matchMedia('(display-mode: standalone)').matches ){                    
+          if(c == 'pwa' && window.matchMedia('(display-mode: standalone)').matches ){
+             alert('instalda');                    
              pasosCompra('usuario');            
           }else{ 
              pasosCompra('instalacion'); 
