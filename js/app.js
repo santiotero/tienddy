@@ -9,7 +9,7 @@ if(navigator.serviceWorker){
    }
 
    navigator.serviceWorker.register(urlSw);
-     
+  
 }
 
 var usuario = {};
@@ -26,7 +26,7 @@ window.onload = function() {
           let url = new URL(url_string);
           let c = url.searchParams.get("source");   
           
-          if(c == 'pwa'){                  
+          if(c == 'pwa'){                   
             pasosCompra('usuario');            
           }else{
             pasosCompra('instalacion');
