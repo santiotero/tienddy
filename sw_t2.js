@@ -64,34 +64,13 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
 
 	
-	//let respuesta;
-	//if( e.request.url.includes('walmart') || e.request.url.includes('app.js') ){
 
-	const respuesta = fetch(e.request).then( res => {
-		 	if(res.ok){
-			 	actualizaCacheDinamico(DYNAMIC_CACHE, e.request, res);
-			 	return res.clone();
-		 	}else{ 
-		 		return caches.match(e.request);
-		 	}
-		}).catch(err => {
-			return caches.match(e.request);  //
-		});
+		return fetch(e.request).then( newRes => {
+				return actualizaCacheDinamico(DYNAMIC_CACHE, e.request, newRes);
+		});				
+		
 
-	/*  }else{
 
-		respuesta = caches.match(e.request).then( res => {
-			if(res){
-				actualizaCacheDinamico(DYNAMIC_CACHE, e.request, newRes);				
-				return res;
-			}else{
-				return fetch(e.request).then( newRes => {
-					return actualizaCacheDinamico(DYNAMIC_CACHE, e.request, newRes);
-				});
-					
-			}
-		});
-	}*/
-
-	e.respondWith(respuesta); 
-});
+	e.respondWith(respuesta);
+ 
+}); 
