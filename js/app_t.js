@@ -1,11 +1,11 @@
 
 var url =  window.location.href;   
-var urlSw = '/tienddy/sw.js';
+var urlSw = '/tienddy/sw_t.js';
     
 if(navigator.serviceWorker){
 
    if( url.includes('localhost') || url.includes('127.0.0.1') ){
-      urlSw = '/sw.js';
+      urlSw = '/sw_t.js';
    }
 
    navigator.serviceWorker.register(urlSw);
@@ -19,7 +19,7 @@ var carrito = {};
 var db = new PouchDB('TNDFY_3');
 var remoteCouch = false;
 var resPouch = false;
- 
+
 window.onload = function() {          
           
           let url_string = window.location.href;
