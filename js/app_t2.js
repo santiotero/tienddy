@@ -5,11 +5,10 @@ var urlSw = '/tienddy/sw_t2.js';
 if(navigator.serviceWorker){
 
    if( url.includes('localhost') || url.includes('127.0.0.1') ){
-      urlSw = '/sw_t2.js';
+      urlSw = '/sw_t2.js'; 
    }
 
    navigator.serviceWorker.register(urlSw);
-  
 } 
 
 var usuario = {};
