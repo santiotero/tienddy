@@ -23,7 +23,7 @@ const url_string = window.location.href;
 const urlv = new URL(url_string);
 let u = urlv.searchParams.get("source");           
 if(u == 'pwa' && window.matchMedia('(display-mode: standalone)').matches ){
-  db = new PouchDB('TNDFY_v1');
+    db = new PouchDB('TNDFY_v1'); //
 }
 var remoteCouch = false;
 
