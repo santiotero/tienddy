@@ -21,7 +21,7 @@ var db = false;
 const url_string = window.location.href;
 const urlv = new URL(url_string);
 let u = urlv.searchParams.get("source");           
-if(u == 'pwa' && window.matchMedia('(display-mode: standalone)').matches ){ 
+if(u == 'pwa' && window.matchMedia('(display-mode: standalone)').matches ){
     db = new PouchDB('TNDFY_v1'); //--
 }
 var remoteCouch = false;
@@ -31,8 +31,8 @@ window.onload = function() {
                     
           let c = urlv.searchParams.get("source");   
           
-          if(c == 'pwa' && window.matchMedia('(display-mode: standalone)').matches ){                                
-             pasosCompra('usuario');             
+          if(c == 'pwa' && window.matchMedia('(display-mode: standalone)').matches ){                               
+             pasosCompra('usuario');            
           }else{ 
              pasosCompra('instalacion'); 
           }          
@@ -78,7 +78,7 @@ window.onload = function() {
 
         document.addEventListener('DOMContentLoaded', function() {
 
-          if(db){
+          if(db != false){
             db.allDocs({include_docs: true, descending: true}).then(doc => {
               
               resPouch = doc; 
@@ -95,7 +95,7 @@ window.onload = function() {
           
                 let d = urlv.searchParams.get("source");
             
-                if(d == 'pwa' && window.matchMedia('(display-mode: standalone)').matches ){ 
+                if(d == 'pwa' && window.matchMedia('(display-mode: standalone)').matches ){
                   pasosCompra('tienda');
                 }
                 
