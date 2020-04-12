@@ -1,11 +1,11 @@
 
 var url =  window.location.href;   
-var urlSw = '/tienddy/sw_t.js'; 
+var urlSw = '/tienddy/sw_t2.js'; 
     
 if(navigator.serviceWorker){
 
    if( url.includes('localhost') || url.includes('127.0.0.1') ){
-      urlSw = '/sw_t.js';
+      urlSw = '/sw_t2.js';
    }
 
    navigator.serviceWorker.register(urlSw);
@@ -15,10 +15,12 @@ if(navigator.serviceWorker){
 var usuario = {};
 var tienda = {};
 var carrito = {};
-  
-var db = new PouchDB('TNDFY_3');
-var remoteCouch = false;
+
 var resPouch = false;
+var db = new PouchDB('TNDFY_v1');
+
+var remoteCouch = false;
+
 
 window.onload = function() {          
           
@@ -86,8 +88,12 @@ window.onload = function() {
               document.getElementById("telefono_usuario").focus();
               document.getElementById("domicilio_usuario").focus();
 
-              pasosCompra('tienda'); // -
-
+              let c = url.searchParams.get("source");   
+          
+              if(c == 'pwa' && window.matchMedia('(display-mode: standalone)').matches ){
+                pasosCompra('tienda');
+              }
+              
             }
             
           });

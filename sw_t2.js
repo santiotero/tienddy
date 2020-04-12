@@ -1,4 +1,4 @@
-importScripts('js/sw_util_t.js'); 
+importScripts('js/sw_util_t2.js'); 
 
   
 const STATIC_CACHE = 'static-v1';
@@ -6,7 +6,6 @@ const DYNAMIC_CACHE = 'dynamic-v1';
 const INMUTABLE_CACHE = 'inmutable-v1';
 
 const APP_SHELL =  [
-	//'/',   
 	'index.html',
 	'img/favicon.png',
 	'img/agradecimiento.png',
@@ -14,9 +13,7 @@ const APP_SHELL =  [
 	'img/compras.png',
 	'img/feliz.png',
 	'img/instalado.png',
-	'img/instalar.png',
-	//'js/app.js', 
-	//'js/sw_util.js'  
+	'img/instalar.png'
 ];
  
 const APP_SHELL_INMUT = [
@@ -36,10 +33,10 @@ self.addEventListener('install', e => {
 	const cacheInmut= caches.open( INMUTABLE_CACHE ).then(cache => {
 		cache.addAll(APP_SHELL_INMUT);
 	});
+	
+	self.skipWaiting();
 
 	e.waitUntil( Promise.all([{cacheStatic,cacheInmut}]) );
-
-	self.skipWaiting();
 
 }); 
 
@@ -49,13 +46,11 @@ self.addEventListener('activate', e => {
         keys.forEach( key => {
  
             if (  key !== STATIC_CACHE && key.includes('static') ) {
-            	caches.delete(key);
-            	location.reload();	 			
+            	caches.delete(key); 			
             }
  
             if (  key !== DYNAMIC_CACHE && key.includes('dynamic') ) {
-            	caches.delete(key);
-            	location.reload();           
+            	caches.delete(key);          
             }
  
         });
@@ -97,8 +92,6 @@ self.addEventListener('fetch', e => {
 			}
 		});
 	}*/
-	
-
 
 	e.respondWith(respuesta); 
 });
