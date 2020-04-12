@@ -17,16 +17,20 @@ var tienda = {};
 var carrito = {};
 
 var resPouch = false;
-var db = new PouchDB('TNDFY_v1');
+var db = false;
 
+const url_string = window.location.href;
+const urlv = new URL(url_string);
+let u = urlv.searchParams.get("source");           
+if(u == 'pwa' && window.matchMedia('(display-mode: standalone)').matches ){
+  db = new PouchDB('TNDFY_v1');
+}
 var remoteCouch = false;
 
 
 window.onload = function() {          
-          
-          let url_string = window.location.href;
-          let url = new URL(url_string);
-          let c = url.searchParams.get("source");   
+                    
+          let c = urlv.searchParams.get("source");   
           
           if(c == 'pwa' && window.matchMedia('(display-mode: standalone)').matches ){                               
              pasosCompra('usuario');            
@@ -75,29 +79,31 @@ window.onload = function() {
 
         document.addEventListener('DOMContentLoaded', function() {
 
-          db.allDocs({include_docs: true, descending: true}).then(doc => {
-            
-            resPouch = doc; 
-            if(resPouch.rows.length > 0){
+          if(db){
+            db.allDocs({include_docs: true, descending: true}).then(doc => {
               
-              document.getElementById("nombre_usuario").value = resPouch.rows[0].doc.nombre;
-              document.getElementById("telefono_usuario").value = resPouch.rows[0].doc.telefono;
-              document.getElementById("domicilio_usuario").value = resPouch.rows[0].doc.domicilio;
+              resPouch = doc; 
+              if(resPouch.rows.length > 0){
+                
+                document.getElementById("nombre_usuario").value = resPouch.rows[0].doc.nombre;
+                document.getElementById("telefono_usuario").value = resPouch.rows[0].doc.telefono;
+                document.getElementById("domicilio_usuario").value = resPouch.rows[0].doc.domicilio;
 
-              document.getElementById("nombre_usuario").focus();
-              document.getElementById("telefono_usuario").focus();
-              document.getElementById("domicilio_usuario").focus();
+                document.getElementById("nombre_usuario").focus();
+                document.getElementById("telefono_usuario").focus();
+                document.getElementById("domicilio_usuario").focus();
 
-              let c = url.searchParams.get("source");   
           
-              if(c == 'pwa' && window.matchMedia('(display-mode: standalone)').matches ){
-                pasosCompra('tienda');
+                let d = urlv.searchParams.get("source");
+            
+                if(d == 'pwa' && window.matchMedia('(display-mode: standalone)').matches ){
+                  pasosCompra('tienda');
+                }
+                
               }
               
-            }
-            
-          });
-            
+            });
+          } 
 
           var elemsMod = document.querySelectorAll('.modal');
           modalpop = M.Modal.init(elemsMod);
