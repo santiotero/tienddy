@@ -26,6 +26,21 @@ if(u == 'pwa' && window.matchMedia('(display-mode: standalone)').matches ){
 }
 var remoteCouch = false;
 
+var firebaseConfig = {
+    apiKey: "AIzaSyDRGOxIAYpWoD4oXBShCLg5yBIFgoUO7H4",
+    authDomain: "tienddify.firebaseapp.com",
+    databaseURL: "https://tienddify.firebaseio.com",
+    projectId: "tienddify",
+    storageBucket: "tienddify.appspot.com",
+    messagingSenderId: "525503514957",
+    appId: "1:525503514957:web:4934e7fb8d33d0b8494f04",
+    measurementId: "G-928KVGB365"
+  };
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+//firebase.analytics();
+const database = firebase.database();
+
 
 window.onload = function() {          
                     
@@ -319,6 +334,12 @@ window.onload = function() {
                         tagI.setAttribute("onclick", "agregar('"+element.product_id+"','"+element.title+"','"+element.image+"','"+conts+"')");
                         document.getElementById(''+element.product_id+'').appendChild(tagI);
 
+                        database.ref('/productos/'+element.product_id).set({
+                          product_id: element.product_id,
+                          title: element.title,
+                          image: element.image
+                        });
+
                       });                      
                 }else{                      
                       document.getElementById('lista').innerHTML = 'No hay resultados...';
@@ -440,4 +461,6 @@ window.onload = function() {
             telefono: telefono
           };
           db.put(datos); 
-        }        
+        }
+
+        
