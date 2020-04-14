@@ -1,8 +1,8 @@
 importScripts('js/sw_util_t2.js'); 
  
   
-const STATIC_CACHE = 'static-v1.1';
-const DYNAMIC_CACHE = 'dynamic-v1.1';
+const STATIC_CACHE = 'static-v1.2';
+const DYNAMIC_CACHE = 'dynamic-v1.2';
 const INMUTABLE_CACHE = 'inmutable-v1';
 
 const APP_SHELL =  [
@@ -13,7 +13,9 @@ const APP_SHELL =  [
 	'img/compras.png',
 	'img/feliz.png',
 	'img/instalado.png',
-	'img/instalar.png'
+	'img/instalar.png',
+	'img/icons/geo_shop.png',
+	'img/icons/geo_user.png'
 ];
  
 const APP_SHELL_INMUT = [
