@@ -11,3 +11,7 @@
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
 }
+
+#mapid { 
+	height: 200px;
+	 }

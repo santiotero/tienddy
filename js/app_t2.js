@@ -17,36 +17,31 @@ var carrito = {};
 
 var resPouch = false;
 var db = false;
+var mymap = false;
 
 const url_string = window.location.href;
 const urlv = new URL(url_string);
-let u = urlv.searchParams.get("source");           
-if(u == 'pwa' && window.matchMedia('(display-mode: standalone)').matches ){
+let u = urlv.searchParams.get("source");
+const mobMode = (u != 'pwa' && !window.matchMedia('(display-mode: standalone)').matches) ? true : false ;
+
+if( mobMode ){
     db = new PouchDB('TNDFY_v1');   
 }
 var remoteCouch = false;
 
-var firebaseConfig = {
-    apiKey: "AIzaSyDRGOxIAYpWoD4oXBShCLg5yBIFgoUO7H4",
-    authDomain: "tienddify.firebaseapp.com",
-    databaseURL: "https://tienddify.firebaseio.com",
-    projectId: "tienddify",
-    storageBucket: "tienddify.appspot.com",
-    messagingSenderId: "525503514957",
-    appId: "1:525503514957:web:4934e7fb8d33d0b8494f04",
-    measurementId: "G-928KVGB365"
-  };
-// Initialize Firebase 
-firebase.initializeApp(firebaseConfig);
-//firebase.analytics(); 
-const database = firebase.database();
+
+const database = iniFiBa();
+
+const refTiendas = database.ref('tiendas');
+
+iniMap();
+
 
 window.onload = function() {          
-                    
-          let c = urlv.searchParams.get("source");   
-          
-          if(c == 'pwa' && window.matchMedia('(display-mode: standalone)').matches ){                               
-             pasosCompra('usuario');            
+                      
+          if( mobMode ){             
+             pasosCompra('usuario');
+                 
           }else{ 
              pasosCompra('instalacion'); 
           }          
@@ -104,12 +99,9 @@ window.onload = function() {
 
                 document.getElementById("nombre_usuario").focus();
                 document.getElementById("telefono_usuario").focus();
-                document.getElementById("domicilio_usuario").focus();
-
-          
-                let d = urlv.searchParams.get("source");
+                document.getElementById("domicilio_usuario").focus();                
             
-                if(d == 'pwa' && window.matchMedia('(display-mode: standalone)').matches ){
+                if( mobMode ){
                   pasosCompra('tienda');
                 }
                 
@@ -125,7 +117,7 @@ window.onload = function() {
           var instancesSid = M.Sidenav.init(elemsSid);
 
           var elemsSel = document.querySelectorAll('select');
-          instances = M.FormSelect.init(elemsSel);
+          instances = M.FormSelect.init(elemsSel);       
 
         });
 
@@ -385,17 +377,13 @@ window.onload = function() {
 
         function validarTienda(){
           
-          let ciudad  = document.getElementById('ciudad_tienda').value;
-          let tiendaSel  = document.getElementById('id_tienda').value;
+          
           let error   = '';
-          if( ciudad == '' || tiendaSel == ""){              
+          if( tienda.telefono == false ){              
             
-            if(ciudad == ''){
-               error += '<span class="title"> - Tenés que elegir una ciudad.</span><br/><br/>';
-            }
-            if(tiendaSel == ''){
-               error += '<span class="title"> - Tenés que elegir una tienda.</span><br/><br/>';
-            }
+            
+            error += '<span class="title"> - Tenés que elegir una tienda.</span><br/><br/>';
+            
               document.getElementById('tituloAgregando').innerHTML = 'Ups!'; 
               document.getElementById('agregando').innerHTML = '<ul class="collection">'+
                                                                 '<li class="collection-item avatar">'+
@@ -405,10 +393,10 @@ window.onload = function() {
                                                                 '</li>'+
                                                                '</ul>';              
               document.getElementById('modpop').click();
-          }else if( ciudad != '' && tiendaSel != ""){
-            tienda = {telefono: tiendaSel, ciudad: ciudad };
+          }else if( tienda.telefono != false && tienda.nombre != false && tienda.ciudad != false  ){            
             pasosCompra('compra');
-          }        
+          }
+
         }
 
         function agradecimiento(){
@@ -462,4 +450,109 @@ window.onload = function() {
           db.put(datos); 
         }
 
-        
+        function titleCase(str) {
+           var splitStr = str.toLowerCase().split(' ');
+           for (var i = 0; i < splitStr.length; i++) {
+               
+               splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+           }
+
+           return splitStr.join(' '); 
+        }
+
+        function iniFiBa(){
+
+          let firebaseConfig = {
+            apiKey: "AIzaSyDRGOxIAYpWoD4oXBShCLg5yBIFgoUO7H4",
+            authDomain: "tienddify.firebaseapp.com",
+            databaseURL: "https://tienddify.firebaseio.com",
+            projectId: "tienddify",
+            storageBucket: "tienddify.appspot.com",
+            messagingSenderId: "525503514957",
+            appId: "1:525503514957:web:4934e7fb8d33d0b8494f04",
+            measurementId: "G-928KVGB365"
+          };
+
+          // Initialize Firebase 
+          firebase.initializeApp(firebaseConfig);
+          //firebase.analytics(); 
+          return firebase.database();
+
+        }
+
+        function iniMap(){
+
+          if (navigator.geolocation) {
+             navigator.geolocation.getCurrentPosition( geoPos => {
+              
+                mymap  = L.map('mapid').setView([geoPos.coords.latitude,geoPos.coords.longitude], 16);
+
+                L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+                  maxZoom: 18,
+                  attribution: '',
+                  id: 'mapbox/streets-v11',
+                  tileSize: 512,
+                  zoomOffset: -1
+                }).addTo(mymap);
+
+                let geoUsuaruioIcon = L.icon({
+                iconUrl: 'img/icons/geo_user.png',
+                iconSize: [32, 32], 
+                });
+
+                L.marker([geoPos.coords.latitude,geoPos.coords.longitude], {icon: geoUsuaruioIcon}).addTo(mymap);
+                L.circle([geoPos.coords.latitude,geoPos.coords.longitude], {radius: 300, opacity:0.5, color:'#ee6e73'}).addTo(mymap);               
+                
+                let urlGeo = 'https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat='+geoPos.coords.latitude+'&lon='+geoPos.coords.longitude+'&zoom=10';
+
+                let h = new Headers();
+                h.append('Accept','aplication/json');
+
+                let req = new Request(urlGeo, {
+                  method: 'GET',
+                  headers: h,
+                  mode: 'cors'
+                });
+
+                fetch(req)
+                .then( res => {
+                  
+                  if(res.ok){
+                    return res.json();
+                  }
+
+                })
+                .then( mapa => {
+                  tienda = {telefono: false, nombre:false, ciudad: mapa.name };
+                  obtenerTiendasCiudad(mapa.name);              
+                });
+
+             });
+            
+          }         
+
+        }
+
+        function obtenerTiendasCiudad(ciudad){
+
+          let geoTiendaIcon = L.icon({
+                iconUrl: 'img/icons/geo_shop.png',
+                iconSize: [32, 32], 
+          });
+
+          refTiendas.orderByChild('ciudad').equalTo(ciudad).on('value', snapshot => {
+              let tiendas = snapshot.val();
+              Object.keys(tiendas).forEach(function(key) {                
+                L.marker([tiendas[key].geo_lat,tiendas[key].geo_lon],{icon: geoTiendaIcon})
+                .on('click', function() { 
+                  tienda.telefono = key;
+                  tienda.nombre = tiendas[key].nombre;
+                  document.getElementById('tiendaSeleccionada').innerHTML = '<div class="chip">Seleccionaste la tienda</div><div class="chip"><img src="img/icons/geo_shop.png" alt="Contact Person">'+tiendas[key].nombre+'</div><br/><br/><br/>';
+                })
+                .addTo(mymap).bindPopup('<p>'+tiendas[key].nombre+'</p>');
+              });
+              tienda.telefono = false;
+              tienda.nombre = false;
+          });
+
+        }

@@ -15,6 +15,10 @@
       <!--Import materialize.css-->
       <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
 
+      <link rel="stylesheet" href="css/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+
+      <script src="js/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
@@ -31,8 +35,7 @@
               <ul class="right hide-on-med-and-down">              
                 <li><a href="#!" onclick="validarUsuarioBtn()"><i class="material-icons">person</i></a></li>              
                 <li><a href="#!" onclick="validarTiendaBtn()"><i class="material-icons">store</i></a></li>
-                <li><a href="#!" onclick="mostrarCarrito()"><i class="material-icons">shopping_cart</i></a></li>
-                
+                <li><a href="#!" onclick="mostrarCarrito()"><i class="material-icons">shopping_cart</i></a></li>                
               </ul>
             </div>
           </nav> 
@@ -41,8 +44,7 @@
         <ul class="sidenav" id="mobile-demo">            
             <li><a href="#!" onclick="validarUsuarioBtn()"><i class="material-icons">person</i>Perfil</a></li>
             <li><a href="#!" onclick="validarTiendaBtn()"><i class="material-icons">store</i>Tienda</a></li>
-            <li><a href="#!" onclick="mostrarCarrito()"><i class="material-icons">shopping_cart</i>Carrito</a></li>
-            
+            <li><a href="#!" onclick="mostrarCarrito()"><i class="material-icons">shopping_cart</i>Carrito</a></li>            
         </ul>  
 
         
@@ -111,7 +113,7 @@
                               <input placeholder="Domicilio" id="domicilio_usuario" type="text" class="validate">
                               <label for="domicilio_usuario">Domicilio</label>
                             </div>
-                          </li>
+                          </li>                          
                           <li class="center-align">
                             <button class="btn waves-effect waves-light red lighten-2" onclick="validarUsuario()" type="button" name="action">Siguiente
                               <i class="material-icons right">arrow_forward</i>
@@ -130,28 +132,18 @@
                     <div class="row s12">
                       <ul class="collection with-header">
                           <li class="center-align"><h4>Elegí la tienda</h4></li>
-                          <li>
-                            <div class="input-field col s12">
-                              <i class="material-icons prefix">location_on</i>
-                              <select id="ciudad_tienda">
-                                <option value="" disabled selected>Ciudad</option>
-                                <option value="cordoba">Córdoba</option>                                
-                              </select>
-                              <label>Seleccioná la ciudad</label>
-                            </div>
-                          </li>
-                          <li>
-                            <li>
-                            <div class="input-field col s12">
-                              <i class="material-icons prefix">store</i>
-                              <select id="id_tienda">
-                                <option value="" disabled selected>Tienda</option>                                
-                                <option value="3541232773">La Rural - Rondeau 162</option>
-                              </select>
-                              <label>Seleccioná la tienda</label>
-                            </div>
-                          </li>
-                          </li>                         
+                          
+                            <li class="center-align">
+                              <div class="col s12 m12">
+                                <div id="mapid"></div>
+                                <br>
+                              </div>
+                            </li>                            
+                            <li class="center-align">
+                               <div class="col s12 m12" id="tiendaSeleccionada">
+                                <div class="chip">No hay tienda seleccionada</div><br/><br/><br/>
+                               </div>                               
+                            </li>                                                
                           <li class="center-align">
                             <button class="btn waves-effect waves-light grey" type="button" onclick="pasosCompra('usuario')" name="action">
                             Volver<i class="material-icons left">arrow_back</i>
@@ -223,31 +215,6 @@
                             </div>
                            </div>
                            </div>
-
-                          <!-- <div class="col s12 m4">
-                           <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                              <img class="activator" src="img/descuentos.png">
-                            </div>
-                            <div class="card-content">
-                              <span class="card-title activator grey-text text-darken-4">Ofertas<i class="material-icons right">more_vert</i></span>                     
-                            </div>
-                            <div class="card-reveal">
-                              <span class="card-title grey-text text-darken-4">Tus ofertas aquí<i class="material-icons right">arrow_back</i></span>
-                              <br/>
-                              <p>Podes anunciar ofertas o combos en este banner</p>
-                              <ul class="collection">
-                                <li class="collection-item avatar"><img src="https://walmartar.vteximg.com.br/arquivos/ids/179739/0779048000037-1.jpg?v=635841448975500000" class="circle"><span class="title">Yerba Mate La Tranquera Con Palo 500 Gr</span><a href="#!" id="14044" class="secondary-content"></a></li>
-
-                                <li class="collection-item avatar"><img src="https://walmartar.vteximg.com.br/arquivos/ids/830171/Azucar-Clasica-Ledesma-1-Kg-1-34033.jpg?v=636685113986830000" class="circle"><span class="title">Azúcar Común Ledesma 1 Kg</span><a href="#!" id="34038" class="secondary-content"></a></li>
-
-                                <li class="collection-item center-align"><p>Todo solo $100</p></li>
-                              </ul>
-                            </div>
-                           </div>
-                           </div>                           
-                          </div> -->
-
           </ul> 
           <ul  id="lista" class="collection">
               <li class="collection-item center-align">
@@ -298,6 +265,7 @@
       <!-- The core Firebase JS SDK is always required and must be listed first -->
       <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
       <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-database.js"></script>
+      
       <script src="js/app_t2.js"></script> 
 
     </body> 
