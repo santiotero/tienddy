@@ -495,6 +495,8 @@ window.onload = function() {
                   zoomOffset: -1
                 }).addTo(mymap);
 
+                mymap.locate({setView: true, maxZoom: 16});
+
                 let geoUsuaruioIcon = L.icon({
                 iconUrl: 'img/icons/geo_user.png',
                 iconSize: [32, 32], 
