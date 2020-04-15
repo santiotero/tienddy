@@ -485,7 +485,7 @@ window.onload = function() {
           if (navigator.geolocation) {
              navigator.geolocation.getCurrentPosition( geoPos => {
               
-                mymap  = L.map('mapid').setView([geoPos.coords.latitude,geoPos.coords.longitude], 16);
+                mymap  = L.map('mapid',{zoomControl: false}).setView([geoPos.coords.latitude,geoPos.coords.longitude], 16);
                 mymap.invalidateSize();
 
                 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
@@ -494,7 +494,7 @@ window.onload = function() {
                   id: 'mapbox/streets-v11',
                   tileSize: 512,
                   zoomOffset: -1
-                }).addTo(mymap);
+                }).addTo(mymap);               
 
                 mymap.locate({setView: true, maxZoom: 16});
 
@@ -504,7 +504,11 @@ window.onload = function() {
                 });
 
                 L.marker([geoPos.coords.latitude,geoPos.coords.longitude], {icon: geoUsuaruioIcon}).addTo(mymap);
-                L.circle([geoPos.coords.latitude,geoPos.coords.longitude], {radius: 300, opacity:0.5, color:'#ee6e73'}).addTo(mymap);               
+                L.circle([geoPos.coords.latitude,geoPos.coords.longitude], {radius: 300, opacity:0.5, color:'#ee6e73'}).addTo(mymap);
+
+                L.control.zoom({
+                     position:'topleft'
+                }).addTo(mymap);             
                 
                 let urlGeo = 'https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat='+geoPos.coords.latitude+'&lon='+geoPos.coords.longitude+'&zoom=10';
 
