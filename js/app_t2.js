@@ -22,7 +22,7 @@ var mymap = false;
 const url_string = window.location.href;
 const urlv = new URL(url_string);
 let u = urlv.searchParams.get("source");
-const mobMode = (u == 'pwa' && window.matchMedia('(display-mode: standalone)').matches) ? true : false ;
+const mobMode = (u != 'pwa' && !window.matchMedia('(display-mode: standalone)').matches) ? true : false ;
 
 if( mobMode ){
     db = new PouchDB('TNDFY_v1');   
@@ -485,18 +485,17 @@ window.onload = function() {
           if (navigator.geolocation) {
              navigator.geolocation.getCurrentPosition( geoPos => {
               
-                mymap  = L.map('mapid',{zoomControl: false}).setView([geoPos.coords.latitude,geoPos.coords.longitude], 16);
-                mymap.invalidateSize();
+                mymap  = L.map('mapid').setView([geoPos.coords.latitude,geoPos.coords.longitude], 16);
 
+                mymap.invalidateSize();               
+                
                 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
                   maxZoom: 16,
                   attribution: '',
                   id: 'mapbox/streets-v11',
                   tileSize: 512,
                   zoomOffset: -1
-                }).addTo(mymap);               
-
-                mymap.locate({setView: true, maxZoom: 16});
+                }).addTo(mymap);
 
                 let geoUsuaruioIcon = L.icon({
                 iconUrl: 'img/icons/geo_user.png',
@@ -505,10 +504,6 @@ window.onload = function() {
 
                 L.marker([geoPos.coords.latitude,geoPos.coords.longitude], {icon: geoUsuaruioIcon}).addTo(mymap);
                 L.circle([geoPos.coords.latitude,geoPos.coords.longitude], {radius: 300, opacity:0.5, color:'#ee6e73'}).addTo(mymap);
-
-                L.control.zoom({
-                     position:'topleft'
-                }).addTo(mymap);             
                 
                 let urlGeo = 'https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat='+geoPos.coords.latitude+'&lon='+geoPos.coords.longitude+'&zoom=10';
 
