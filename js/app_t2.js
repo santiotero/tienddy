@@ -33,8 +33,6 @@ const database = iniFiBa();
 
 const refTiendas = database.ref('tiendas');
 
-iniMap();
-
 
 window.onload = function() {          
                       
@@ -138,6 +136,7 @@ window.onload = function() {
 
             case 'tienda':
               if(usuario){
+                iniMap();
                 document.getElementById("instalacion").style.display = "none";                                 
                 document.getElementById("usuario").style.display = "none";
                 document.getElementById("tienda").style.display = "block";
@@ -481,54 +480,57 @@ window.onload = function() {
 
         function iniMap(){
 
-          if (navigator.geolocation) {
-             navigator.geolocation.getCurrentPosition( geoPos => {
+          if(mymap == false){
 
-                mymap = L.map('mapid').
-                setView([geoPos.coords.latitude,geoPos.coords.longitude], 
-                16);
-                 
-                L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: 'Tienddify',
-                    maxZoom: 16
-                }).addTo(mymap);
+              if (navigator.geolocation) {
+                 navigator.geolocation.getCurrentPosition( geoPos => {
 
-                L.control.scale().addTo(mymap);
+                    mymap = L.map('mapid').
+                    setView([geoPos.coords.latitude,geoPos.coords.longitude], 
+                    16);
+                     
+                    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: 'Tienddify',
+                        maxZoom: 16
+                    }).addTo(mymap);
 
-                let geoUsuaruioIcon = L.icon({
-                iconUrl: 'img/icons/geo_user.png',
-                iconSize: [32, 32], 
-                });
+                    L.control.scale().addTo(mymap);
 
-                L.marker([geoPos.coords.latitude,geoPos.coords.longitude], {icon: geoUsuaruioIcon}).addTo(mymap);
-                L.circle([geoPos.coords.latitude,geoPos.coords.longitude], {radius: 300, opacity:0.5, color:'#ee6e73'}).addTo(mymap);
+                    let geoUsuaruioIcon = L.icon({
+                    iconUrl: 'img/icons/geo_user.png',
+                    iconSize: [32, 32], 
+                    });
+
+                    L.marker([geoPos.coords.latitude,geoPos.coords.longitude], {icon: geoUsuaruioIcon}).addTo(mymap);
+                    L.circle([geoPos.coords.latitude,geoPos.coords.longitude], {radius: 300, opacity:0.5, color:'#ee6e73'}).addTo(mymap);
+                    
+                    let urlGeo = 'https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat='+geoPos.coords.latitude+'&lon='+geoPos.coords.longitude+'&zoom=10';
+
+                    let h = new Headers();
+                    h.append('Accept','aplication/json');
+
+                    let req = new Request(urlGeo, {
+                      method: 'GET',
+                      headers: h,
+                      mode: 'cors'
+                    });
+                    
+                    fetch(req)
+                    .then( res => {
+                      
+                      if(res.ok){
+                        return res.json();
+                      }
+
+                    })
+                    .then( mapa => {
+                      tienda = {telefono: false, nombre:false, ciudad: mapa.name };
+                      obtenerTiendasCiudad(mapa.name);              
+                    });
+                    
+                 });
                 
-                let urlGeo = 'https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat='+geoPos.coords.latitude+'&lon='+geoPos.coords.longitude+'&zoom=10';
-
-                let h = new Headers();
-                h.append('Accept','aplication/json');
-
-                let req = new Request(urlGeo, {
-                  method: 'GET',
-                  headers: h,
-                  mode: 'cors'
-                });
-                
-                fetch(req)
-                .then( res => {
-                  
-                  if(res.ok){
-                    return res.json();
-                  }
-
-                })
-                .then( mapa => {
-                  tienda = {telefono: false, nombre:false, ciudad: mapa.name };
-                  obtenerTiendasCiudad(mapa.name);              
-                });
-                
-             });
-            
+              }
           }         
 
         }
