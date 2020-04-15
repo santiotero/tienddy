@@ -484,7 +484,21 @@ window.onload = function() {
 
           if (navigator.geolocation) {
              navigator.geolocation.getCurrentPosition( geoPos => {
-              
+
+                mymap = L.map('mapid').
+                setView([geoPos.coords.latitude,geoPos.coords.longitude], 
+                18);
+                 
+                L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: 'Tienddify',
+                    maxZoom: 18
+                }).addTo(mymap);
+
+                L.control.scale().addTo(mymap);
+                L.marker([geoPos.coords.latitude,geoPos.coords.longitude], {draggable: true}).addTo(mymap);
+
+                //--------------------------------------------------------------------------
+                /*
                 mymap  = L.map('mapid').setView([geoPos.coords.latitude,geoPos.coords.longitude], 16);
 
                 mymap.invalidateSize();               
@@ -515,7 +529,7 @@ window.onload = function() {
                   headers: h,
                   mode: 'cors'
                 });
-
+                
                 fetch(req)
                 .then( res => {
                   
@@ -528,7 +542,7 @@ window.onload = function() {
                   tienda = {telefono: false, nombre:false, ciudad: mapa.name };
                   obtenerTiendasCiudad(mapa.name);              
                 });
-
+                */ 
              });
             
           }         
