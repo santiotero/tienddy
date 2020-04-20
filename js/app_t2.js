@@ -24,14 +24,6 @@ const urlv = new URL(url_string);
 let u = urlv.searchParams.get("source");
 const mobMode = (u == 'pwa' && (window.matchMedia('(display-mode: standalone)').matches ? true : false) );
 
-if( !mobMode && u == 'pwa'){
-  
-  if(navigator.userAgent.match(/SAMSUNG|SGH-[I|N|T]|GT-[I|P|N]|SM-[N|P|T|Z|G]|SHV-E|SCH-[I|J|R|S]|SPH-L/i))  {
-    mobMode = true;
-  }
-
-}
-
 
 if( mobMode ){
     db = new PouchDB('TNDFY_v1.0.0.0');   
@@ -42,7 +34,6 @@ var remoteCouch = false;
 const database = iniFiBa();
 
 const refTiendas = database.ref('tiendas');
-
 
 window.onload = function() {          
                       
@@ -74,6 +65,11 @@ window.onload = function() {
 
           // Add event click function for Add button
           buttonAdd.addEventListener('click', (e) => {
+
+            if(navigator.userAgent.match(/SAMSUNG|SGH-[I|N|T]|GT-[I|P|N]|SM-[N|P|T|Z|G]|SHV-E|SCH-[I|J|R|S]|SPH-L/i))  {
+                alert('Por favor abrí esta página en Google Chrome para poder instalar la aplicación.');
+            }else{
+            
             // Show the prompt
             deferredPrompt.prompt();
             // Wait for the user to respond to the prompt
@@ -84,6 +80,8 @@ window.onload = function() {
                 }
                 deferredPrompt = null;
               });
+            }
+
           });
 
           window.addEventListener('appinstalled', (evt) => {
