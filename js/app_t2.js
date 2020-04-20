@@ -29,7 +29,7 @@ if( !mobMode && u == 'pwa'){
   if(navigator.userAgent.match(/SAMSUNG|SGH-[I|N|T]|GT-[I|P|N]|SM-[N|P|T|Z|G]|SHV-E|SCH-[I|J|R|S]|SPH-L/i))  {
     mobMode = true;
   }
-  
+
 }
 
 
@@ -68,7 +68,7 @@ window.onload = function() {
           window.addEventListener('beforeinstallprompt', (e) => {
             // Prevent Chrome 67 and earlier from automatically showing the prompt
             e.preventDefault();
-            // Stash the event so it can be triggered later. ////////////////////////
+            // Stash the event so it can be triggered later. //////////////////////////
             deferredPrompt = e;
           });
 
