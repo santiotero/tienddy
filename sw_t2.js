@@ -1,6 +1,6 @@
 importScripts('js/sw_util_t2.js'); 
 
-///
+////
  
 const STATIC_CACHE = 'static-v1.3.5';
 const DYNAMIC_CACHE = 'dynamic-v1.3.5';
