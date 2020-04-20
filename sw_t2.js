@@ -68,12 +68,3 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', function(event) {
   event.respondWith(fetch(event.request));
 });
-
-/*  
-self.addEventListener('fetch', e => {
-		return fetch(e.request).then( newRes => {
-				return actualizaCacheDinamico(DYNAMIC_CACHE, e.request, newRes);
-		});				
-	e.respondWith(respuesta); 
-});
-*/
