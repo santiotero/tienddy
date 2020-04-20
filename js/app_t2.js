@@ -22,7 +22,7 @@ var mymap = false;
 const url_string = window.location.href;
 const urlv = new URL(url_string);
 let u = urlv.searchParams.get("source");
-const mobMode = (u == 'pwa' && window.matchMedia('(display-mode: standalone)').matches) ? true : false ;
+const mobMode = (u == 'pwa' && (window.matchMedia('(display-mode: standalone)').matches ? true : false) );
 
 if( mobMode ){
     db = new PouchDB('TNDFY_v1.0.0.0');   
