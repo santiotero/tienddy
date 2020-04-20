@@ -24,9 +24,19 @@ const urlv = new URL(url_string);
 let u = urlv.searchParams.get("source");
 const mobMode = (u == 'pwa' && (window.matchMedia('(display-mode: standalone)').matches ? true : false) );
 
+if( mobMode && u == 'pwa'){
+  
+  if(navigator.userAgent.match(/SAMSUNG|SGH-[I|N|T]|GT-[I|P|N]|SM-[N|P|T|Z|G]|SHV-E|SCH-[I|J|R|S]|SPH-L/i))  {
+    alert('Estas usando un navegador samsung. Recomendamos usar Chrome.');
+
+  }
+}
+
+
 if( mobMode ){
     db = new PouchDB('TNDFY_v1.0.0.0');   
 }
+
 var remoteCouch = false;
 
 const database = iniFiBa();
