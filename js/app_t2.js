@@ -489,7 +489,7 @@ window.onload = function() {
                     setView([geoPos.coords.latitude,geoPos.coords.longitude], 
                     16);
                      
-                    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         attribution: 'Tienddify',
                         maxZoom: 16
                     }).addTo(mymap);
