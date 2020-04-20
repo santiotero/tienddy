@@ -25,7 +25,7 @@ let u = urlv.searchParams.get("source");
 const mobMode = (u == 'pwa' && window.matchMedia('(display-mode: standalone)').matches) ? true : false ;
 
 if( mobMode ){
-    db = new PouchDB('TNDFY_v1');   
+    db = new PouchDB('TNDFY_v1.0.0.0');   
 }
 var remoteCouch = false;
 
