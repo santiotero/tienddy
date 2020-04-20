@@ -28,7 +28,7 @@ if( mobMode && u == 'pwa'){
   
   if(navigator.userAgent.match(/SAMSUNG|SGH-[I|N|T]|GT-[I|P|N]|SM-[N|P|T|Z|G]|SHV-E|SCH-[I|J|R|S]|SPH-L/i))  {
     alert('Estas usando un navegador samsung. Recomendamos usar Chrome.');
-
+    // 
   }
 }
 
