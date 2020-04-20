@@ -555,7 +555,7 @@ window.onload = function() {
               Object.keys(tiendas).forEach(function(key) {                
                 L.marker([tiendas[key].geo_lat,tiendas[key].geo_lon],{icon: geoTiendaIcon})
                 .on('click', function() { 
-                  tienda.telefono = key;
+                  tienda.telefono = tiendas[key].telefono;
                   tienda.nombre = tiendas[key].nombre;
                   document.getElementById('tiendaSeleccionada').innerHTML = '<div class="chip">Seleccionaste la tienda</div><div class="chip"><img src="img/icons/geo_shop.png" alt="Contact Person">'+tiendas[key].nombre+'</div><br/><br/><br/>';
                 })
