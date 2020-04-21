@@ -172,7 +172,7 @@ window.onload = function() {
           let pedidoWhatsApp = 'Nuevo pedido desde Tienddify! \n\ \n\ ';
           let cont = 1;
 
-          pedidoWhatsApp +=  usuario.nombre + ' \n ';
+          pedidoWhatsApp +=  usuario.nombre + ' ';
           pedidoWhatsApp += ' solicitó el siguiente pedido: \n \n ';
 
           Object.keys(carrito).forEach(function(key) {
@@ -189,7 +189,9 @@ window.onload = function() {
           document.getElementById('agregandoCerrar').click(); 
           document.getElementById('carritoCerrar').click();       
           agradecimiento();
-          window.location.replace(pedidoWhatsApp);          
+          window.location.replace(pedidoWhatsApp);
+          setTimeout(function(){ location.reload() }, 4000);
+                  
         }
 
         function validarCompra(){
@@ -458,7 +460,10 @@ window.onload = function() {
             domicilio: domicilio,
             telefono: telefono
           };
-          db.put(datos); 
+          
+          db.put(datos).catch( err => {
+             console.log(err);
+          });          
         }
 
         function titleCase(str) {
