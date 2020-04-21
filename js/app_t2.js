@@ -101,6 +101,11 @@ window.onload = function() {
                 document.getElementById("nombre_usuario").value = resPouch.rows[0].doc.nombre;
                 document.getElementById("telefono_usuario").value = resPouch.rows[0].doc.telefono;
                 document.getElementById("domicilio_usuario").value = resPouch.rows[0].doc.domicilio;
+                usuario = { 
+                            nombre:    resPouch.rows[0].doc.nombre,
+                            telefono:  resPouch.rows[0].doc.telefono,
+                            domicilio: resPouch.rows[0].doc.domicilio
+                          };
 
                 document.getElementById("nombre_usuario").focus();
                 document.getElementById("telefono_usuario").focus();
@@ -167,7 +172,7 @@ window.onload = function() {
           let pedidoWhatsApp = 'Nuevo pedido desde Tienddify! \n\ \n\ ';
           let cont = 1;
 
-          pedidoWhatsApp += ' El usuario ' + usuario.nombre + ' \n ';
+          pedidoWhatsApp +=  usuario.nombre + ' \n ';
           pedidoWhatsApp += ' solicitó el siguiente pedido: \n \n ';
 
           Object.keys(carrito).forEach(function(key) {
