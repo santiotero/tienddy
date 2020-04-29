@@ -325,9 +325,10 @@ window.onload = function() {
                 if( Object.keys(res.data.views).length > 0 ){                      
                       
                       (res.data.views).forEach(element => {
+                      let img_prod = (element.image).replace('http', 'https');  
                       let conts = 
                                   '<li class="collection-item avatar">' + 
-                                    '<img src="'+element.image+'" class="circle">'+
+                                    '<img src="'+img_prod+'" class="circle">'+
                                     '<span class="title">'+element.title+'</span>'+
                                       '<a href="#!" id="'+element.product_id+'" class="secondary-content"></a>'
                                   '</li>';
@@ -335,13 +336,13 @@ window.onload = function() {
                         let tagI = document.createElement("i");                    
                         tagI.innerHTML = "add_shopping_cart";
                         tagI.setAttribute("class", "material-icons");                   
-                        tagI.setAttribute("onclick", "agregar('"+element.product_id+"','"+element.title+"','"+element.image+"','"+conts+"')");
+                        tagI.setAttribute("onclick", "agregar('"+element.product_id+"','"+element.title+"','"+img_prod+"','"+conts+"')");
                         document.getElementById(''+element.product_id+'').appendChild(tagI);
 
                         database.ref('/productos/'+element.product_id).set({
                           product_id: element.product_id,
                           title: element.title,
-                          image: element.image
+                          image: img_prod
                         });
 
                       });                      
